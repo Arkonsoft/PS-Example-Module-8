@@ -2,7 +2,7 @@
 
 /**
  * NOTICE OF LICENSE
- * 
+ *
  * This file is licensed under the Software License Agreement.
  *
  * With the purchase or the installation of the software in your application
@@ -16,12 +16,24 @@
 
 declare(strict_types=1);
 
+use ArkonExample\Common\Service\SettingsService;
+use Arkonsoft\PsModule\Core\Module\AbstractModule;
+use Arkonsoft\PsModule\DI\Container;
+use Arkonsoft\PsModule\DI\ContainerInterface;
+
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-class ArkonExample extends Module
+require_once __DIR__ . '/vendor/autoload.php';
+
+class ArkonExample extends AbstractModule
 {
+    /**
+     * @var ContainerInterface
+     */
+    public $container = null;
+
     public function __construct()
     {
         $this->name = 'arkonexample';
@@ -39,7 +51,9 @@ class ArkonExample extends Module
         $this->description = $this->l('Example module for test purpose');
         $this->confirmUninstall = $this->l('Are you sure? All data will be lost!');
         $this->ps_versions_compliancy = ['min' => '1.7', 'max' => _PS_VERSION_];
-        $this->settingsController = 'AdminArkonExampleSettings';
+
+        $this->container = new Container();
+        $this->container->set('settings', SettingsService::class, [$this]);
     }
 
     public function install()
@@ -50,67 +64,19 @@ class ArkonExample extends Module
 
         return (parent::install()
             && $this->registerHook('moduleRoutes')
-            && $this->registerHook('actionFrontControllerSetMedia')
-            && $this->installSettingsTab()
+            && $this->container->get('settings')->install()
         );
     }
 
     public function uninstall()
     {
         return (parent::uninstall()
-            && $this->uninstallSettingsTab()
+            && $this->container->get('settings')->uninstall()
         );
-    }
-
-    public function installSettingsTab()
-    {
-        $tab = new Tab();
-        $tab->id_parent = (int)Tab::getIdFromClassName('AdminParentThemes');
-        $tab->name = [];
-        foreach (Language::getLanguages(true) as $lang) {
-            $tab->name[$lang['id_lang']] = $this->displayName;
-        }
-        $tab->class_name = $this->settingsController;
-        $tab->module = $this->name;
-        $tab->active = 1;
-        return $tab->add();
-    }
-
-    public function uninstallSettingsTab()
-    {
-        $id_tab = (int)Tab::getIdFromClassName($this->settingsController);
-        $tab = new Tab((int)$id_tab);
-        return $tab->delete();
     }
 
     public function hookModuleRoutes()
     {
-        require_once 'vendor/autoload.php';
-    }
-
-    public function actionFrontControllerSetMedia()
-    {
-        $this->context->controller->registerStylesheet(
-            "module-{$this->name}-front",
-            "modules/{$this->name}/views/css/front.css",
-            [
-                'media' => 'all',
-                'priority' => 1000
-            ]
-        );
-
-        $this->context->controller->registerJavascript(
-            "module-{$this->name}-front",
-            "modules/{$this->name}/views/js/front.js",
-            [
-                'position' => 'bottom',
-                'priority' => 1000
-            ]
-        );
-    }
-
-    public function getContent()
-    {
-        Tools::redirect($this->context->link->getAdminLink($this->settingsController));
+        require_once $this->getLocalPath() . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
     }
 }
