@@ -1,18 +1,18 @@
 <?php
+
 /**
-* NOTICE OF LICENSE
-*
-* This file is licensed under the Software License Agreement.
-*
-* With the purchase or the installation of the software in your application
-* you accept the licence agreement.
-*
-* You must not modify, adapt or create derivative works of this source code
-*
-* @author Arkonsoft
-* @copyright 2017-2022 Arkonsoft
-* @license https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
-*/
+ * NOTICE OF LICENSE
+ *
+ * This file is licensed under the Software License Agreement.
+ *
+ * With the purchase or the installation of the software in your application
+ * you accept the license agreement.
+ *
+ * You must not modify, adapt or create derivative works of this source code
+ *
+ * @author Arkonsoft
+ * @copyright 2023 Arkonsoft
+ */
 
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');

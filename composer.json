@@ -1,7 +1,11 @@
 {
-    "autoload": {
-        "psr-4": {
-            "ArkonExample\\": "src/"
-        }
+  "autoload": {
+    "psr-4": {
+      "ArkonExample\\": "src/"
     }
+  },
+  "require": {
+    "arkonsoft/ps-module-core": "^1.0",
+    "arkonsoft/ps-module-di": "^1.0"
+  }
 }

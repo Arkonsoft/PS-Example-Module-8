@@ -14,12 +14,18 @@
  * @copyright 2023 Arkonsoft
  */
 
-header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+declare(strict_types=1);
 
-header('Cache-Control: no-store, no-cache, must-revalidate');
-header('Cache-Control: post-check=0, pre-check=0', false);
-header('Pragma: no-cache');
+namespace ArkonExample\Common\Service;
 
-header('Location: ../');
-exit;
+use ArkonExample\Domain\Settings\SettingsInterface;
+use Arkonsoft\PsModule\DI\ServiceInterface;
+
+if (!defined('_PS_VERSION_')) {
+    exit;
+}
+
+interface SettingsServiceInterface extends ServiceInterface
+{
+    public function getSettings(): SettingsInterface;
+}

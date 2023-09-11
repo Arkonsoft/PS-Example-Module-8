@@ -1,24 +1,27 @@
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+const isProduction = process.env.npm_lifecycle_script.includes("--mode production");
 
 let config = {
     entry: {
-		'theme': ['./resources/js/front.ts', './resources/scss/front.scss'],
+        admin: ["./resources/js/admin.ts", "./resources/scss/admin.scss"],
+        front: ["./resources/js/front.ts", "./resources/scss/front.scss"],
     },
     output: {
-        path: path.resolve(__dirname, './views'),
-        filename: 'js/[name].js',
+        path: path.resolve(__dirname, "./views"),
+        filename: "js/[name].js",
     },
     module: {
         rules: [
             {
-				test: /\.tsx?$/,
-				use: 'ts-loader',
-				exclude: /node_modules/,
-			},
+                test: /\.tsx?$/,
+                use: "ts-loader",
+                exclude: /node_modules/,
+            },
             {
-                test: /\.(png|jpg|gif|woff|woff2|ttf|eot|svg)$/,
-                loader: 'ignore-loader',
+                test: /\.(png|jpg|gif|woff|woff2|ttf|eot|svg|txt)$/,
+                loader: "ignore-loader",
             },
             {
                 test: /\.(sa|sc|c)ss$/,
@@ -27,7 +30,7 @@ let config = {
                         loader: MiniCssExtractPlugin.loader,
                     },
                     {
-                        loader: 'css-loader',
+                        loader: "css-loader",
                         options: {
                             importLoaders: 1,
                             url: false,
@@ -35,16 +38,16 @@ let config = {
                         },
                     },
                     {
-                        loader: 'postcss-loader',
+                        loader: "postcss-loader",
                         options: {
                             sourceMap: true,
                             postcssOptions: {
-                                path: 'postcss.config.js',
+                                path: "postcss.config.js",
                             },
                         },
                     },
                     {
-                        loader: 'sass-loader',
+                        loader: "sass-loader",
                         options: {
                             sourceMap: true,
                         },
@@ -53,16 +56,16 @@ let config = {
             },
         ],
     },
-	resolve: {
-		extensions: ['.tsx', '.ts', '.js'],
-	},
+    resolve: {
+        extensions: [".tsx", ".ts", ".js"],
+    },
     externals: {},
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'css/[name].css',
+            filename: "css/[name].css",
         }),
     ],
-    devtool: 'inline-source-map',
+    devtool: isProduction ? false : "inline-source-map",
     watchOptions: {
         ignored: /node_modules/,
     },
