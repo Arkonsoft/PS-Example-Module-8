@@ -16,7 +16,7 @@
 
 declare(strict_types=1);
 
-namespace ArkonExample\Common\Service;
+namespace ArkonExample\Module\Service;
 
 use ArkonExample\Domain\Settings\SettingsInterface;
 use Arkonsoft\PsModule\DI\ServiceInterface;

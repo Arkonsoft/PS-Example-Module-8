@@ -16,7 +16,7 @@
 
 declare(strict_types=1);
 
-namespace ArkonExample\Common\Controller\Admin;
+namespace ArkonExample\Module\Controller\Admin;
 
 use Arkonsoft\PsModule\Core\Controller\AbstractAdminSettingsController;
 

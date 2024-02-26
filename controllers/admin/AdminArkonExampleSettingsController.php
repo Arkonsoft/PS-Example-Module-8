@@ -16,7 +16,7 @@
 
 declare(strict_types=1);
 
-use ArkonExample\Common\Controller\Admin\SettingsAdminController;
+use ArkonExample\Module\Controller\Admin\SettingsAdminController;
 
 if (!defined('_PS_VERSION_')) {
     exit;

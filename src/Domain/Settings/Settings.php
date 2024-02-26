@@ -18,22 +18,9 @@ declare(strict_types=1);
 
 namespace ArkonExample\Domain\Settings;
 
-use ArkonExample;
-
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
 class Settings implements SettingsInterface
-{
-    /**
-     * @var ArkonExample
-     */
-    private $module;
-
-
-    public function __construct(ArkonExample $module)
-    {
-        $this->module = $module;
-    }
-}
+{}

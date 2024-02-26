@@ -16,7 +16,7 @@
 
 declare(strict_types=1);
 
-namespace ArkonExample\Common\Service;
+namespace ArkonExample\Module\Service;
 
 use ArkonExample;
 use ArkonExample\Domain\Settings\Settings;

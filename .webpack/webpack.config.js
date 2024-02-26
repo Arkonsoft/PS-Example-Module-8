@@ -5,11 +5,11 @@ const isProduction = process.env.npm_lifecycle_script.includes("--mode productio
 
 let config = {
     entry: {
-		admin: ["./resources/js/admin.ts", "./resources/scss/admin.scss"],
-        front: ["./resources/js/front.ts", "./resources/scss/front.scss"],
+		admin: ["./resources/scripts/admin.ts", "./resources/styles/admin.scss"],
+        front: ["./resources/scripts/front.ts", "./resources/styles/front.scss"],
     },
     output: {
-        path: path.resolve(__dirname, './views'),
+        path: path.resolve(__dirname, '../views'),
         filename: 'js/[name].js',
     },
     module: {

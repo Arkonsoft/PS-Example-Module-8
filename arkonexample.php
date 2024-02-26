@@ -16,7 +16,7 @@
 
 declare(strict_types=1);
 
-use ArkonExample\Common\Service\SettingsService;
+use ArkonExample\Module\Service\SettingsService;
 use Arkonsoft\PsModule\Core\Module\AbstractModule;
 use Arkonsoft\PsModule\DI\Container;
 use Arkonsoft\PsModule\DI\ContainerInterface;
