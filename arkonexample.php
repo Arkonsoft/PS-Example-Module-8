@@ -64,12 +64,34 @@ class ArkonExample extends AbstractModule
 
         return (parent::install()
             && $this->registerHook('moduleRoutes')
+            && $this->registerHook('actionFrontControllerSetMedia')
         );
     }
 
     public function uninstall()
     {
         return (parent::uninstall());
+    }
+
+    public function hookActionFrontControllerSetMedia()
+    {
+        $this->context->controller->registerStylesheet(
+            $this->name . '-front',
+            "modules/{$this->name}/views/css/front.css",
+            [
+                'media' => 'all',
+                'priority' => 1000
+            ]
+        );
+
+        $this->context->controller->registerJavascript(
+            $this->name . '-front',
+            "modules/{$this->name}/views/js/front.js",
+            [
+                'position' => 'bottom',
+                'priority' => 1000
+            ]
+        );
     }
 
     public function hookModuleRoutes()
