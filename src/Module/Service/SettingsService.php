@@ -20,47 +20,21 @@ namespace ArkonExample\Module\Service;
 
 use ArkonExample;
 use ArkonExample\Domain\Settings\Settings;
-use ArkonExample\Domain\Settings\SettingsInterface;
 
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-class SettingsService implements SettingsServiceInterface
+class SettingsService
 {
     /**
      * @var ArkonExample
      */
     private $module;
 
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
-
     public function __construct(ArkonExample $module)
     {
         $this->module = $module;
         $this->settings = new Settings($this->module);
-    }
-
-    public function install(): bool
-    {
-        return true;
-    }
-
-    public function uninstall(): bool
-    {
-        return true;
-    }
-
-    public function registerHooks(): bool
-    {
-        return true;
-    }
-
-    public function getSettings(): SettingsInterface
-    {
-        return $this->settings;
     }
 }
