@@ -64,15 +64,12 @@ class ArkonExample extends AbstractModule
 
         return (parent::install()
             && $this->registerHook('moduleRoutes')
-            && $this->container->get('settings')->install()
         );
     }
 
     public function uninstall()
     {
-        return (parent::uninstall()
-            && $this->container->get('settings')->uninstall()
-        );
+        return (parent::uninstall());
     }
 
     public function hookModuleRoutes()
