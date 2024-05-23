@@ -35,6 +35,9 @@ class SettingsAdminController extends AbstractAdminSettingsController
         $this->page_header_toolbar_title = $this->meta_title;
     }
 
+    /**
+     * @return void
+     */
     public function prepareOptions()
     {
         $form = [

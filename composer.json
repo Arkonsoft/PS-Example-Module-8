@@ -1,10 +1,13 @@
 {
-  "autoload": {
-    "psr-4": {
-      "ArkonExample\\": "src/"
+    "autoload": {
+        "psr-4": {
+            "ArkonExample\\": "src/"
+        }
+    },
+    "config": {
+        "autoloader-suffix": "ArkonExample"
+    },
+    "require": {
+        "arkonsoft/ps-module-core": "^1.0"
     }
-  },
-  "require": {
-    "arkonsoft/ps-module-core": "^1.0"
-  }
 }
