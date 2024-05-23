@@ -9,5 +9,14 @@
     },
     "require": {
         "arkonsoft/ps-module-core": "^1.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.11",
+        "phpunit/phpunit": "8"
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "./vendor/bin/phpunit tests --testdox",
+        "coverage": "./vendor/bin/phpunit --coverage-text"
     }
 }
