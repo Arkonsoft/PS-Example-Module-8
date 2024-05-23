@@ -88,7 +88,7 @@ class SettingsAdminController extends AbstractAdminSettingsController
                         'label' => $this->module->l('Example text field 2', pathinfo(__FILE__, PATHINFO_FILENAME)),
                         'type' => 'text',
                         'name' => $this->module->name . 'example_text_field2',
-                        'desc' => $this->module->l('This is example description of field, pathinfo(__FILE__, PATHINFO_FILENAME)'),
+                        'desc' => $this->module->l('This is example description of field', pathinfo(__FILE__, PATHINFO_FILENAME)),
                         'lang' => true,
                         'tab' => 'other2'
                     ],
