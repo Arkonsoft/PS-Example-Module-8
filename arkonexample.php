@@ -54,6 +54,7 @@ class ArkonExample extends AbstractModule
         }
 
         return (parent::install()
+            && $this->installTab()
             && $this->registerHook('moduleRoutes')
             && $this->registerHook('actionFrontControllerSetMedia')
         );
@@ -61,7 +62,9 @@ class ArkonExample extends AbstractModule
 
     public function uninstall()
     {
-        return (parent::uninstall());
+        return (parent::uninstall()
+            && $this->uninstallTab()
+        );
     }
 
     public function hookModuleRoutes()
