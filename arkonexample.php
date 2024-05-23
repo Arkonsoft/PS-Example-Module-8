@@ -11,15 +11,12 @@
  * You must not modify, adapt or create derivative works of this source code
  *
  * @author Arkonsoft
- * @copyright 2023 Arkonsoft
+ * @copyright 2024 Arkonsoft
  */
 
 declare(strict_types=1);
 
-use ArkonExample\Module\Service\SettingsService;
 use Arkonsoft\PsModule\Core\Module\AbstractModule;
-use Arkonsoft\PsModule\DI\Container;
-use Arkonsoft\PsModule\DI\ContainerInterface;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -29,11 +26,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 class ArkonExample extends AbstractModule
 {
-    /**
-     * @var ContainerInterface
-     */
-    public $container = null;
-
     public function __construct()
     {
         $this->name = 'arkonexample';
@@ -48,12 +40,11 @@ class ArkonExample extends AbstractModule
         parent::__construct();
 
         $this->displayName = $this->l('Example module');
-        $this->description = $this->l('Example module for test purpose');
+        $this->description = $this->l('Example module for example purpose');
         $this->confirmUninstall = $this->l('Are you sure? All data will be lost!');
         $this->ps_versions_compliancy = ['min' => '1.7', 'max' => _PS_VERSION_];
 
-        $this->container = new Container();
-        $this->container->set('settings', SettingsService::class, [$this]);
+        $this->settingsAdminController = str_replace('Controller', '', AdminArkonExampleSettingsController::class);
     }
 
     public function install()
@@ -71,6 +62,11 @@ class ArkonExample extends AbstractModule
     public function uninstall()
     {
         return (parent::uninstall());
+    }
+
+    public function hookModuleRoutes()
+    {
+        require_once $this->getLocalPath() . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
     }
 
     public function hookActionFrontControllerSetMedia()
@@ -94,8 +90,39 @@ class ArkonExample extends AbstractModule
         );
     }
 
-    public function hookModuleRoutes()
+    public function installTab(): bool
     {
-        require_once $this->getLocalPath() . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
+        if (Tab::getIdFromClassName($this->settingsAdminController)) {
+            return true;
+        }
+
+        $tab = new Tab();
+
+        $parentTabClassName = 'AdminCatalog';
+
+        $tab->id_parent = (int)Tab::getIdFromClassName($parentTabClassName);
+        $tab->name = [];
+
+        foreach (Language::getLanguages(true) as $lang) {
+            $tab->name[$lang['id_lang']] = $this->displayName;
+        }
+        $tab->class_name = $this->settingsAdminController;
+        $tab->module = $this->name;
+        $tab->active = 1;
+
+        return (bool) $tab->add();
+    }
+
+    public function uninstallTab(): bool
+    {
+        $id_tab = (int)Tab::getIdFromClassName($this->settingsAdminController);
+        $tab = new Tab((int)$id_tab);
+
+        return (bool) $tab->delete();
+    }
+
+    public function getContent()
+    {
+        Tools::redirectAdmin($this->context->link->getAdminLink($this->settingsAdminController));
     }
 }
