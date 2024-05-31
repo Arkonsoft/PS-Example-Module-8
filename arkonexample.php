@@ -42,7 +42,7 @@ class ArkonExample extends AbstractModule
         $this->displayName = $this->l('Example module');
         $this->description = $this->l('Example module for example purpose');
         $this->confirmUninstall = $this->l('Are you sure? All data will be lost!');
-        $this->ps_versions_compliancy = ['min' => '1.7', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '1.7.5', 'max' => _PS_VERSION_];
 
         $this->settingsAdminController = str_replace('Controller', '', AdminArkonExampleSettingsController::class);
     }
