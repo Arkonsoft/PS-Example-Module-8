@@ -17,6 +17,7 @@
 declare(strict_types=1);
 
 use Arkonsoft\PsModule\Core\Module\AbstractModule;
+use Arkonsoft\PsModule\Core\Module\ModuleCategory;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -29,7 +30,7 @@ class ArkonExample extends AbstractModule
     public function __construct()
     {
         $this->name = 'arkonexample';
-        $this->tab = 'front_office_features';
+        $this->tab = ModuleCategory::FRONT_OFFICE_FEATURES;
         $this->version = '1.0.0';
         $this->author = 'Arkonsoft';
         $this->author_uri = 'https://arkonsoft.pl/';
