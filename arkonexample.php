@@ -27,6 +27,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 class ArkonExample extends AbstractModule
 {
+    public string $settingsAdminController;
+    
     public function __construct()
     {
         $this->name = 'arkonexample';
