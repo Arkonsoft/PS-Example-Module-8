@@ -12,12 +12,17 @@
  * @author Arkonsoft
  * @copyright 2025 Arkonsoft
  */
-header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 
-header('Cache-Control: no-store, no-cache, must-revalidate');
-header('Cache-Control: post-check=0, pre-check=0', false);
-header('Pragma: no-cache');
+declare(strict_types=1);
 
-header('Location: ../');
-exit;
+namespace ArkonExample\Infrastructure\Form\Settings;
+
+if (!defined('_PS_VERSION_')) {
+    exit;
+}
+
+enum SettingsFormDictionary: string
+{
+    case EXAMPLE_TEXT_FIELD = 'example_text_field';
+    case EXAMPLE_SWITCHER = 'example_switcher';
+}

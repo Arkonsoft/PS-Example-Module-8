@@ -1,5 +1,4 @@
 <?php
-
 /**
  * NOTICE OF LICENSE
  *
@@ -11,13 +10,13 @@
  * You must not modify, adapt or create derivative works of this source code
  *
  * @author Arkonsoft
- * @copyright 2024 Arkonsoft
+ * @copyright 2025 Arkonsoft
  */
 
 declare(strict_types=1);
 
-use Arkonsoft\PsModule\Core\Module\AbstractModule;
-use Arkonsoft\PsModule\Core\Module\ModuleCategory;
+use ArkonExample\Infrastructure\Bootstrap\Install\Installer;
+use Arkonsoft\PsModule\DI\AutowiringContainer;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -25,110 +24,73 @@ if (!defined('_PS_VERSION_')) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-class ArkonExample extends AbstractModule
+class ArkonExample extends Module
 {
-    public $settingsAdminController;
-    
+    public AutowiringContainer $container;
+
     public function __construct()
     {
         $this->name = 'arkonexample';
-        $this->tab = ModuleCategory::FRONT_OFFICE_FEATURES;
+        $this->tab = 'front_office_features';
         $this->version = '1.0.0';
         $this->author = 'Arkonsoft';
         $this->author_uri = 'https://arkonsoft.pl/';
-        $this->need_instance = 1;
-        $this->bootstrap = 1;
+        $this->need_instance = true;
+        $this->bootstrap = true;
+        $this->ps_versions_compliancy = ['min' => '8.0.0', 'max' => _PS_VERSION_];
         $this->dependencies = [];
 
         parent::__construct();
 
-        $this->displayName = $this->l('Example module');
-        $this->description = $this->l('Example module for example purpose');
-        $this->confirmUninstall = $this->l('Are you sure? All data will be lost!');
-        $this->ps_versions_compliancy = ['min' => '1.7.5', 'max' => _PS_VERSION_];
+        $this->displayName = 'Przykładowy moduł';
+        $this->description = 'Przykładowy moduł do celów demonstracyjnych';
+        $this->confirmUninstall = 'Jesteś pewien, że chcesz usunąć wszystkie dane?';
 
-        $this->settingsAdminController = str_replace('Controller', '', AdminArkonExampleSettingsController::class);
+        $this->prepareContainer();
+    }
+
+    private function prepareContainer()
+    {
+        $this->container = new AutowiringContainer();
+
+        /* Parameters */
+        $this->container->setParameter('module_name', $this->name);
+        $this->container->setParameter('settings_controller_class_name', str_replace('Controller', '', AdminArkonExampleSettingsController::class));
+
+        /* Services */
+        $this->container->set(Db::class, function () {
+            return Db::getInstance();
+        });
+
+        $this->container->set(self::class, function () {
+            return $this;
+        });
     }
 
     public function install()
     {
-        if (Shop::isFeatureActive()) {
+        if (!Shop::isFeatureActive()) {
             Shop::setContext(Shop::CONTEXT_ALL);
         }
 
-        return (parent::install()
-            && $this->installTab()
-            && $this->registerHook('moduleRoutes')
-            && $this->registerHook('actionFrontControllerSetMedia')
-        );
+        if (!parent::install()) {
+            return false;
+        }
+
+        return $this->container->get(Installer::class)->install();
     }
 
     public function uninstall()
     {
-        return (parent::uninstall()
-            && $this->uninstallTab()
-        );
-    }
-
-    public function hookModuleRoutes()
-    {
-        require_once $this->getLocalPath() . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
-    }
-
-    public function hookActionFrontControllerSetMedia()
-    {
-        $this->context->controller->registerStylesheet(
-            $this->name . '-front',
-            "modules/{$this->name}/views/css/front.css",
-            [
-                'media' => 'all',
-                'priority' => 1000
-            ]
-        );
-
-        $this->context->controller->registerJavascript(
-            $this->name . '-front',
-            "modules/{$this->name}/views/js/front.js",
-            [
-                'position' => 'bottom',
-                'priority' => 1000
-            ]
-        );
-    }
-
-    public function installTab(): bool
-    {
-        if (Tab::getIdFromClassName($this->settingsAdminController)) {
-            return true;
+        if (!parent::uninstall()) {
+            return false;
         }
 
-        $tab = new Tab();
-
-        $parentTabClassName = 'AdminCatalog';
-
-        $tab->id_parent = (int)Tab::getIdFromClassName($parentTabClassName);
-        $tab->name = [];
-
-        foreach (Language::getLanguages(true) as $lang) {
-            $tab->name[$lang['id_lang']] = $this->displayName;
-        }
-        $tab->class_name = $this->settingsAdminController;
-        $tab->module = $this->name;
-        $tab->active = 1;
-
-        return (bool) $tab->add();
-    }
-
-    public function uninstallTab(): bool
-    {
-        $id_tab = (int)Tab::getIdFromClassName($this->settingsAdminController);
-        $tab = new Tab((int)$id_tab);
-
-        return (bool) $tab->delete();
+        return $this->container->get(Installer::class)->uninstall();
     }
 
     public function getContent()
     {
-        Tools::redirectAdmin($this->context->link->getAdminLink($this->settingsAdminController));
+        Tools::redirectAdmin($this->context->link->getAdminLink($this->container->get('%settings_controller_class_name%')));
     }
 }
