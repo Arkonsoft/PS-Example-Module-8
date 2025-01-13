@@ -1,6 +1,6 @@
 <?php
 /**
- *  NOTICE OF LICENSE
+ * NOTICE OF LICENSE
  *
  * This file is licensed under the Software License Agreement.
  *
@@ -11,6 +11,7 @@
  *
  * @author Arkonsoft
  * @copyright 2025 Arkonsoft
+ * @license Commercial - The terms of the license are subject to a proprietary agreement between the author (Arkonsoft) and the licensee
  */
 
 declare(strict_types=1);

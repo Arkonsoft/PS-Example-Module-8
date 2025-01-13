@@ -11,6 +11,7 @@
  *
  * @author Arkonsoft
  * @copyright 2025 Arkonsoft
+ * @license Commercial - The terms of the license are subject to a proprietary agreement between the author (Arkonsoft) and the licensee
  */
 
 declare(strict_types=1);

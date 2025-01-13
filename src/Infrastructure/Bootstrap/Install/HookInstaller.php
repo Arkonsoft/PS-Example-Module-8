@@ -1,5 +1,4 @@
 <?php
-
 /**
  * NOTICE OF LICENSE
  *
@@ -11,7 +10,8 @@
  * You must not modify, adapt or create derivative works of this source code
  *
  * @author Arkonsoft
- * @copyright 2024 Arkonsoft
+ * @copyright 2025 Arkonsoft
+ * @license Commercial - The terms of the license are subject to a proprietary agreement between the author (Arkonsoft) and the licensee
  */
 
 declare(strict_types=1);
@@ -30,6 +30,8 @@ class HookInstaller implements InstallerInterface
 
     public function install(): bool
     {
+        // return $this->module->registerHook('displayHome');
+
         return true;
     }
 

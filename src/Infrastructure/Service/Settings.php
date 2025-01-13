@@ -11,6 +11,7 @@
  *
  * @author Arkonsoft
  * @copyright 2025 Arkonsoft
+ * @license Commercial - The terms of the license are subject to a proprietary agreement between the author (Arkonsoft) and the licensee
  */
 
 declare(strict_types=1);
@@ -40,10 +41,12 @@ class Settings
     public function getFieldFullName(string $field): string
     {
         if (empty($field)) {
+            // @phpstan-ignore-next-line
             if (_PS_MODE_DEV_) {
                 throw new \InvalidArgumentException('Field name cannot be empty');
             }
 
+            // @phpstan-ignore-next-line
             return '';
         }
 
@@ -55,9 +58,9 @@ class Settings
      * TODO: remove this example
      * ============================================
      *
-     * @param ?int $langId
+     * @param int $langId
      *
-     * @return string|array<int,string>
+     * @return string
      */
     public function getExampleTextFieldName(int $langId): string
     {
