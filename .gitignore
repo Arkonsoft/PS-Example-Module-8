@@ -1,6 +1,4 @@
-composer.lock
-package-lock.json
 vendor
-node_modules
 .phpunit.result.cache
 yarn.lock
+.env

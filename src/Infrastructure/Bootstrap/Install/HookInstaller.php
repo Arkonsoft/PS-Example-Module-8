@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NOTICE OF LICENSE
  *
@@ -10,17 +11,30 @@
  * You must not modify, adapt or create derivative works of this source code
  *
  * @author Arkonsoft
- * @copyright 2025 Arkonsoft
+ * @copyright 2024 Arkonsoft
  */
 
 declare(strict_types=1);
 
-use ArkonExample\Application\Controller\Admin\SettingsAdminController;
+namespace ArkonExample\Infrastructure\Bootstrap\Install;
 
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-class AdminArkonExampleSettingsController extends SettingsAdminController
+class HookInstaller implements InstallerInterface
 {
+    public function __construct(private \ArkonExample $module)
+    {
+    }
+
+    public function install(): bool
+    {
+        return true;
+    }
+
+    public function uninstall(): bool
+    {
+        return true;
+    }
 }
