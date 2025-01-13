@@ -32,6 +32,10 @@ class ArkonExample extends Module
     public function __construct()
     {
         $this->name = 'arkonexample';
+        
+        /**
+         * @see Full list of available tabs: https://devdocs.prestashop-project.org/8/modules/concepts/module-class/#tab
+         */
         $this->tab = 'front_office_features';
         $this->version = '1.0.0';
         $this->author = 'Arkonsoft';
