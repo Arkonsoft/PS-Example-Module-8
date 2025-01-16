@@ -37,6 +37,19 @@ class TabInstaller implements InstallerInterface
 
     public function install(): bool
     {
+        return (
+            $this->installSettingsTab()
+        );
+    }
+
+    public function uninstall(): bool
+    {
+        return (
+            $this->uninstallSettingsTab()
+        );
+    }
+
+    private function installSettingsTab(): bool {
         if (\Tab::getIdFromClassName($this->settingsControllerClassName)) {
             return true;
         }
@@ -51,13 +64,12 @@ class TabInstaller implements InstallerInterface
 
         $tab->class_name = $this->settingsControllerClassName;
         $tab->module = $this->module->name;
-        $tab->active = true;
+        $tab->active = false;
 
         return (bool) $tab->add();
     }
 
-    public function uninstall(): bool
-    {
+    private function uninstallSettingsTab(): bool {
         $id_tab = (int) \Tab::getIdFromClassName($this->settingsControllerClassName);
 
         $tab = new \Tab((int) $id_tab);
