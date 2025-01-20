@@ -10,3 +10,4 @@
 6. W pliku `src/Infrastructure/Bootstrap/Install/TabInstaller.php` możesz zarządzać tym, gdzie podłączy się link do konfiguracji modułu.
 7. W pliku `src/Infrastructure/Bootstrap/Install/HookInstaller.php` możesz zarejestrować hooki modułu.
 8. Podmień logo (jeżeli robisz moduł dla Klienta)
+9. Uruchom komendę `composer install`.
