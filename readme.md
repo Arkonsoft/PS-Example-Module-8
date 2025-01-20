@@ -9,3 +9,4 @@
 5. Podmień nazwę pliku controllers/admin/AdminArkonExampleSettingsController.php na Admin{TWOJA_NAZWA_MODUŁU}SettingsController.php
 6. W pliku `src/Infrastructure/Bootstrap/Install/TabInstaller.php` możesz zarządzać tym, gdzie podłączy się link do konfiguracji modułu.
 7. W pliku `src/Infrastructure/Bootstrap/Install/HookInstaller.php` możesz zarejestrować hooki modułu.
+8. Podmień logo (jeżeli robisz moduł dla Klienta)
