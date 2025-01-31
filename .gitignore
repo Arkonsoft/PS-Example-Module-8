@@ -2,3 +2,4 @@ vendor
 .phpunit.result.cache
 yarn.lock
 .env
+/config_*.xml

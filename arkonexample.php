@@ -63,12 +63,16 @@ class ArkonExample extends Module
         $this->container->setParameter('settings_controller_class_name', str_replace('Controller', '', AdminArkonExampleSettingsController::class));
 
         /* Services */
+        $this->container->set(self::class, function () {
+            return $this;
+        });
+
         $this->container->set(Db::class, function () {
             return Db::getInstance();
         });
 
-        $this->container->set(self::class, function () {
-            return $this;
+        $this->container->set(Context::class, function () {
+            return $this->context;
         });
     }
 

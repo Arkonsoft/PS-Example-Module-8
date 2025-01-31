@@ -38,41 +38,50 @@ class TabInstaller implements InstallerInterface
     public function install(): bool
     {
         return (
-            $this->installSettingsTab()
+            $this->installTab(
+                $this->settingsControllerClassName,
+                $this->module->displayName,
+                TabDictionary::PARENT_THEMES,
+                false
+            )
         );
     }
 
     public function uninstall(): bool
     {
         return (
-            $this->uninstallSettingsTab()
+            $this->uninstallTab($this->settingsControllerClassName)
         );
     }
 
-    private function installSettingsTab(): bool {
-        if (\Tab::getIdFromClassName($this->settingsControllerClassName)) {
+    private function installTab(string $controllerClassName, string|array $tabName, string $tabParent, bool $shouldBeVisibleInMenu): bool {
+        if (\Tab::getIdFromClassName($controllerClassName)) {
             return true;
         }
 
         $tab = new \Tab();
-        $tab->id_parent = (int) \Tab::getIdFromClassName(TabDictionary::PARENT_THEMES);
+        $tab->id_parent = (int) \Tab::getIdFromClassName($tabParent);
         $tab->name = [];
 
-        foreach (\Language::getLanguages(true, false, true) as $langId) {
-            $tab->name[(int) $langId] = $this->module->displayName;
+        if (is_array($tabName)) {
+            $tab->name = $tabName;
+        } else {
+            foreach (\Language::getLanguages(true, false, true) as $langId) {
+                $tab->name[(int) $langId] = $tabName;
+            }
         }
 
-        $tab->class_name = $this->settingsControllerClassName;
+        $tab->class_name = $controllerClassName;
         $tab->module = $this->module->name;
-        $tab->active = false;
+        $tab->active = $shouldBeVisibleInMenu;
 
         return (bool) $tab->add();
     }
 
-    private function uninstallSettingsTab(): bool {
-        $id_tab = (int) \Tab::getIdFromClassName($this->settingsControllerClassName);
+    private function uninstallTab(string $controllerClassName): bool {
+        $tabId = (int) \Tab::getIdFromClassName($controllerClassName);
 
-        $tab = new \Tab((int) $id_tab);
+        $tab = new \Tab((int) $tabId);
 
         return (bool) $tab->delete();
     }
