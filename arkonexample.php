@@ -47,8 +47,8 @@ class ArkonExample extends Module
 
         parent::__construct();
 
-        $this->displayName = 'Przykładowy moduł';
-        $this->description = 'Przykładowy moduł do celów demonstracyjnych';
+        $this->displayName = 'ArkonExample';
+        $this->description = 'ArkonExample';
         $this->confirmUninstall = 'Jesteś pewien, że chcesz usunąć wszystkie dane?';
 
         $this->prepareContainer();
