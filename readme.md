@@ -31,19 +31,20 @@ git clone https://github.com/Arkonsoft/PS-Example-Module-8.git ./twojanazwamodul
 
 ### Foldery
 
-📁 controllers/  
-   └─ 📁 admin/                                  `# folder na legacy kontrolery back-office`
-
-📁 src/                                          `# zawiera główny kod modułu`  
-   ├─ 📁 Application/                            `# zawiera klasy kontrolerów, DTO, niektóre serwisy itp. działające na styku Domeny i Infrastruktury`  
-      └─ 📁 Controller/                          `# zawiera właściwe implementacje kontrolerów`  
-   ├─ 📁 Domain/                                 `# zawiera kod związany z logiką biznesową modułu (np. obiekty, interfejsy, serwisy domenowe)`  
-   └─ 📁 Infrastructure/                         `# zawiera klasy repozytoriów, presenterów, formatterów, serwisów itp., które implementują logike domenową w kontekście PrestaShop`  
-       ├─ 📁 Bootstrap/                          `# zawiera kod inicjalizujący moduł, np. Instalator`  
-       ├─ 📁 Form/                               `# zawiera kod dot. formularzy w module`  
-       └─ 📁 Service/                            `# zawiera kod serwisów, np. Settings`  
-
-📁 tests/                                        `# folder zawierający testy i konfigurację PHPUnit & PHPStan`
+```bash
+.
+├── controllers
+│   └── admin                     # folder na legacy kontrolery back-office
+├── src                           # zawiera główny kod modułu
+│   ├── Application               # zawiera klasy kontrolerów, DTO, niektóre serwisy itp. działające na styku Domeny i Infrastruktury
+│   │   └── Controller           # zawiera właściwe implementacje kontrolerów
+│   ├── Domain                    # zawiera kod związany z logiką biznesową modułu (np. obiekty, interfejsy, serwisy domenowe)
+│   └── Infrastructure           # zawiera klasy repozytoriów, presenterów, formatterów, serwisów itp., które implementują logike domenową w kontekście PrestaShop
+│       ├── Bootstrap            # zawiera kod inicjalizujący moduł, np. Instalator
+│       ├── Form                 # zawiera kod dot. formularzy w module
+│       └── Service              # zawiera kod serwisów, np. Settings
+└── tests                        # folder zawierający testy i konfigurację PHPUnit & PHPStan
+```
 
 ### Dlaczego DDD?
 
