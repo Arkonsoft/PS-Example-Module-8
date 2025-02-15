@@ -32,13 +32,12 @@ git clone https://github.com/Arkonsoft/PS-Example-Module-8.git ./twojanazwamodul
 ### Foldery
 
 ```bash
-.
 ├── controllers
-│   └── admin                     # folder na legacy kontrolery back-office
-├── src                           # zawiera główny kod modułu
-│   ├── Application               # zawiera klasy kontrolerów, DTO, niektóre serwisy itp. działające na styku Domeny i Infrastruktury
+│   └── admin                    # folder na legacy kontrolery back-office
+├── src                          # zawiera główny kod modułu
+│   ├── Application              # zawiera klasy kontrolerów, DTO, niektóre serwisy itp. działające na styku Domeny i Infrastruktury
 │   │   └── Controller           # zawiera właściwe implementacje kontrolerów
-│   ├── Domain                    # zawiera kod związany z logiką biznesową modułu (np. obiekty, interfejsy, serwisy domenowe)
+│   ├── Domain                   # zawiera kod związany z logiką biznesową modułu (np. obiekty, interfejsy, serwisy domenowe)
 │   └── Infrastructure           # zawiera klasy repozytoriów, presenterów, formatterów, serwisów itp., które implementują logike domenową w kontekście PrestaShop
 │       ├── Bootstrap            # zawiera kod inicjalizujący moduł, np. Instalator
 │       ├── Form                 # zawiera kod dot. formularzy w module
@@ -127,3 +126,80 @@ Aby dodać nowe pola ustawień modułu należy:
 1. Zdefiniowac nowe pola w pliku `src\Infrastructure\Form\Settings\SettingsFormDictionary.php`
 2. Dodać nowe gettery i settery w serwisie `Settings` w pliku `src\Infrastructure\Service\Settings.php`
 3. Dodać pola w formacie HelperForm'a `src\Application\Controller\Admin\SettingsController.php`. Obsługa zapisu i odczytu znajduje się w klasie nadrzędnej tego kontrolera więc nie musisz się tym całkowicie przejmować. Pola same się zapiszą i odczytają do formularza.
+
+W pliku SettingsController znajdziesz przykładową implementację metody `prepareOptions` w której możesz modyfikować pola formularza.
+
+```php
+    /**
+     * @return void
+     */
+    public function prepareOptions()
+    {
+        $settings = $this->module->container->get(Settings::class);
+
+        $form = [
+            'form' => [
+                'tabs' => [
+                    'global' => 'Globalne',
+                    // 'other1' => 'Inne 1',
+                    // 'other2' => 'Inne 2',
+                ],
+                'legend' => [
+                    'title' => 'Ustawienia',
+                    'icon' => 'icon-cogs',
+                ],
+                'input' => [
+                    [
+                        'label' => 'Przykładowe pole tekstowe',
+                        'type' => 'text',
+                        'name' => $settings->getFieldFullName(SettingsFormDictionary::EXAMPLE_TEXT_FIELD->value),
+                        'desc' => 'To jest przykładowy opis pola',
+                        'lang' => true,
+                        'tab' => 'global',
+                    ],
+                    [
+                        'label' => 'Przykładowy przełącznik',
+                        'type' => 'switch',
+                        'name' => $settings->getFieldFullName(SettingsFormDictionary::EXAMPLE_SWITCHER->value),
+                        'is_bool' => true,
+                        'values' => [
+                            [
+                                'id' => $settings->getFieldFullName(SettingsFormDictionary::EXAMPLE_SWITCHER->value) . '_on',
+                                'value' => 1,
+                                'label' => 'Włączony',
+                            ],
+                            [
+                                'id' => $settings->getFieldFullName(SettingsFormDictionary::EXAMPLE_SWITCHER->value) . '_off',
+                                'value' => 0,
+                                'label' => 'Wyłączony',
+                            ],
+                        ],
+                        'tab' => 'global',
+                    ],
+                    // [
+                    //     'label' => 'Przykładowe pole tekstowe 1',
+                    //     'type' => 'text',
+                    //     'name' => $settings->getFieldFullName(SettingsFormDictionary::EXAMPLE_TEXT_FIELD_1),
+                    //     'desc' => 'To jest przykładowy opis pola',
+                    //     'lang' => true,
+                    //     'tab' => 'other1',
+                    // ],
+                    // [
+                    //     'label' => 'Przykładowe pole tekstowe 2',
+                    //     'type' => 'text',
+                    //     'name' => $settings->getFieldFullName(SettingsFormDictionary::EXAMPLE_TEXT_FIELD_2)
+                    //     'desc' => 'To jest przykładowy opis pola',
+                    //     'lang' => true,
+                    //     'tab' => 'other2',
+                    // ],
+                ],
+                'submit' => [
+                    'title' => 'Zapisz',
+                    'class' => 'btn btn-default pull-right',
+                ],
+            ],
+        ];
+
+        $this->forms[] = $form;
+    }
+```
