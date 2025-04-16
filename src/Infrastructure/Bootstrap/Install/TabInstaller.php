@@ -37,12 +37,18 @@ class TabInstaller implements InstallerInterface
 
     public function install(): bool
     {
-        return (
+         return (
             $this->installTab(
-                $this->settingsControllerClassName,
-                $this->module->displayName,
-                TabDictionary::PARENT_THEMES,
-                false
+                controllerClassName: $this->module->name,
+                tabName: $this->module->displayName,
+                tabParent: TabDictionary::PARENT_THEMES,
+                shouldBeVisibleInMenu: true
+            ) &&
+            $this->installTab(
+                controllerClassName: $this->settingsControllerClassName,
+                tabName: $this->module->displayName,
+                tabParent: $this->module->name,
+                shouldBeVisibleInMenu: true
             )
         );
     }
@@ -50,6 +56,7 @@ class TabInstaller implements InstallerInterface
     public function uninstall(): bool
     {
         return (
+            $this->uninstallTab($this->module->name) &&
             $this->uninstallTab($this->settingsControllerClassName)
         );
     }
