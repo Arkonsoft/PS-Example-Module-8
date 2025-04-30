@@ -28,6 +28,7 @@ class Installer implements InstallerInterface
         private readonly DbInstaller $dbInstaller,
         private readonly HookInstaller $hookInstaller,
         private readonly TabInstaller $tabInstaller,
+        private readonly DirectoryInstaller $directoryInstaller
     ) {
     }
 
@@ -37,6 +38,7 @@ class Installer implements InstallerInterface
             $this->dbInstaller->install()
             && $this->hookInstaller->install()
             && $this->tabInstaller->install()
+            && $this->directoryInstaller->install()
         ;
     }
 
@@ -46,6 +48,7 @@ class Installer implements InstallerInterface
             $this->dbInstaller->uninstall()
             && $this->hookInstaller->uninstall()
             && $this->tabInstaller->uninstall()
+            && $this->directoryInstaller->uninstall()
         ;
     }
 }
