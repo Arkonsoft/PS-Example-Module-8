@@ -39,15 +39,15 @@ class TabInstaller implements InstallerInterface
     {
          return (
             $this->installTab(
-                controllerClassName: $this->module->name,
-                tabName: $this->module->displayName,
+                controllerClassName: (string) $this->module->name,
+                tabName: (string) $this->module->displayName,
                 tabParent: TabDictionary::PARENT_THEMES,
                 shouldBeVisibleInMenu: true
             ) &&
             $this->installTab(
-                controllerClassName: $this->settingsControllerClassName,
-                tabName: $this->module->displayName,
-                tabParent: $this->module->name,
+                controllerClassName: (string) $this->settingsControllerClassName,
+                tabName: (string) $this->module->displayName,
+                tabParent: (string) $this->module->name,
                 shouldBeVisibleInMenu: true
             )
         );
@@ -56,11 +56,17 @@ class TabInstaller implements InstallerInterface
     public function uninstall(): bool
     {
         return (
-            $this->uninstallTab($this->module->name) &&
-            $this->uninstallTab($this->settingsControllerClassName)
+            $this->uninstallTab((string) $this->module->name) &&
+            $this->uninstallTab((string) $this->settingsControllerClassName)
         );
     }
 
+    /**
+     * @param string $controllerClassName
+     * @param string|array<int, string> $tabName
+     * @param string $tabParent
+     * @param bool $shouldBeVisibleInMenu
+     */
     private function installTab(string $controllerClassName, string|array $tabName, string $tabParent, bool $shouldBeVisibleInMenu): bool {
         if (\Tab::getIdFromClassName($controllerClassName)) {
             return true;
