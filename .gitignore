@@ -3,4 +3,3 @@ vendor
 yarn.lock
 .env
 /config_*.xml
-composer.lock
