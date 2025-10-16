@@ -36,8 +36,8 @@ check_file_exists ".htaccess"
 # 3. Check for logo.png
 check_file_exists "logo.png"
 
-# 4. Check PHP files for version check (excluding translations directory, cs-fixer files, and test files)
-for php_file in $(find . -name "*.php" ! -name "index.php" ! -path "*/translations/*" ! -name "*cs-fixer*" ! -path "*/tests/*" ! -path "*/test/*"); do
+# 4. Check PHP files for version check (excluding translations directory, cs-fixer files, test files, vendor, and git directories)
+for php_file in $(find . -name "*.php" ! -name "index.php" ! -path "*/translations/*" ! -name "*cs-fixer*" ! -path "*/tests/*" ! -path "*/test/*" ! -path "*/vendor/*" ! -path "*/.git/*"); do
     check_php_header "$php_file"
 done
 
