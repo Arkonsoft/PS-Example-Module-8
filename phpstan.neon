@@ -3,6 +3,5 @@ parameters:
     paths:
         - controllers
         - src
-        - tests
     bootstrapFiles:
         - tests/bootstrap.php

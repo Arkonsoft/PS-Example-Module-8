@@ -16,10 +16,10 @@
 
 declare(strict_types=1);
 
-namespace ArkonExample\Application\Controller\Admin;
+namespace ArkonExample\Settings\Application\Controller\Admin;
 
-use ArkonExample\Infrastructure\Form\Settings\SettingsFormDictionary;
-use ArkonExample\Infrastructure\Service\Settings;
+use ArkonExample\Settings\Domain\ValueObject\SettingsFormDictionary;
+use ArkonExample\Settings\Infrastructure\Service\Settings;
 use Arkonsoft\PsModule\Core\Controller\AbstractAdminSettingsController;
 
 if (!defined('_PS_VERSION_')) {
@@ -46,7 +46,7 @@ class SettingsAdminController extends AbstractAdminSettingsController
      */
     public function prepareOptions()
     {
-        $settings = $this->module->container->get(Settings::class);
+        $settings = $this->module->moduleContainer->get(Settings::class);
 
         $form = [
             'form' => [

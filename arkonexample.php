@@ -16,7 +16,9 @@
 
 declare(strict_types=1);
 
-use ArkonExample\Infrastructure\Bootstrap\Install\Installer;
+use ArkonExample\Shared\Infrastructure\Bootstrap\Install\Installer;
+use Arkonsoft\PsModule\Core\Tab\TabManager;
+use Arkonsoft\PsModule\Core\Tab\TabManagerInterface;
 use Arkonsoft\PsModule\DI\AutowiringContainer;
 
 if (!defined('_PS_VERSION_')) {
@@ -27,7 +29,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 class ArkonExample extends Module
 {
-    public AutowiringContainer $container;
+    public AutowiringContainer $moduleContainer;
 
     public function __construct()
     {
@@ -56,24 +58,38 @@ class ArkonExample extends Module
 
     private function prepareContainer()
     {
-        $this->container = new AutowiringContainer();
+        $this->moduleContainer = new AutowiringContainer();
 
         /* Parameters */
-        $this->container->setParameter('module_name', $this->name);
-        $this->container->setParameter('settings_controller_class_name', str_replace('Controller', '', AdminArkonExampleSettingsController::class));
+        $this->moduleContainer->setParameter('module_name', $this->name);
+        $this->moduleContainer->setParameter('sql_dir', $this->getLocalPath() . '/sql');
+        $this->moduleContainer->setParameter('settings_controller_class_name', str_replace('Controller', '', AdminArkonExampleSettingsController::class));
 
         /* Services */
-        $this->container->set(self::class, function () {
+        $this->moduleContainer->set(self::class, function () {
             return $this;
         });
 
-        $this->container->set(Db::class, function () {
+        $this->moduleContainer->set(\ArkonExample::class, function () {
+            return $this;
+        });
+
+        $this->moduleContainer->set(Db::class, function () {
             return Db::getInstance();
         });
 
-        $this->container->set(Context::class, function () {
+        $this->moduleContainer->set(Context::class, function () {
             return $this->context;
         });
+
+        $this->moduleContainer->set(TabManagerInterface::class, function () {
+            return new TabManager($this);
+        });
+    }
+
+    public function isUsingNewTranslationSystem(): bool
+    {
+        return true;
     }
 
     public function install()
@@ -86,7 +102,7 @@ class ArkonExample extends Module
             return false;
         }
 
-        return $this->container->get(Installer::class)->install();
+        return $this->moduleContainer->get(Installer::class)->install();
     }
 
     public function uninstall()
@@ -95,11 +111,11 @@ class ArkonExample extends Module
             return false;
         }
 
-        return $this->container->get(Installer::class)->uninstall();
+        return $this->moduleContainer->get(Installer::class)->uninstall();
     }
 
     public function getContent()
     {
-        Tools::redirectAdmin($this->context->link->getAdminLink($this->container->get('%settings_controller_class_name%')));
+        Tools::redirectAdmin($this->context->link->getAdminLink($this->moduleContainer->get('%settings_controller_class_name%')));
     }
 }

@@ -16,7 +16,7 @@
 
 declare(strict_types=1);
 
-namespace ArkonExample\Infrastructure\Bootstrap\Install;
+namespace ArkonExample\Shared\Infrastructure\Bootstrap\Install;
 
 if (!defined('_PS_VERSION_')) {
     exit;

@@ -13,17 +13,12 @@
  * @copyright 2025 Arkonsoft
  * @license Commercial - The terms of the license are subject to a proprietary agreement between the author (Arkonsoft) and the licensee
  */
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 
-declare(strict_types=1);
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Cache-Control: post-check=0, pre-check=0', false);
+header('Pragma: no-cache');
 
-namespace ArkonExample\Infrastructure\Form\Settings;
-
-if (!defined('_PS_VERSION_')) {
-    exit;
-}
-
-enum SettingsFormDictionary: string
-{
-    case EXAMPLE_TEXT_FIELD = 'example_text_field';
-    case EXAMPLE_SWITCHER = 'example_switcher';
-}
+header('Location: ../');
+exit;

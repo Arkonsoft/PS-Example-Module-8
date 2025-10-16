@@ -1,0 +1,7 @@
+-- CREATE TABLE IF NOT EXISTS `_DB_PREFIX_arkonexample_entity` (
+--     `id_entity` int(10) unsigned NOT NULL AUTO_INCREMENT,
+--     `title` varchar(255) NOT NULL,
+--     `active` tinyint(1) NOT NULL DEFAULT 0,
+--     `position` int(10) unsigned NOT NULL DEFAULT 0,
+--     PRIMARY KEY (`id_entity`)
+-- ) ENGINE=_MYSQL_ENGINE_ DEFAULT CHARSET=utf8;

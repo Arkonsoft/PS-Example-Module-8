@@ -16,12 +16,15 @@
 
 declare(strict_types=1);
 
-use ArkonExample\Settings\Application\Controller\Admin\SettingsAdminController;
+namespace ArkonExample\Shared\Infrastructure\Bootstrap\Install;
 
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-class AdminArkonExampleSettingsController extends SettingsAdminController
+interface InstallerInterface
 {
+    public function install(): bool;
+
+    public function uninstall(): bool;
 }

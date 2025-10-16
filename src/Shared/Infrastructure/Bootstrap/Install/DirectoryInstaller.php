@@ -16,15 +16,22 @@
 
 declare(strict_types=1);
 
-namespace ArkonExample\Infrastructure\Bootstrap\Install\Command;
+namespace ArkonExample\Shared\Infrastructure\Bootstrap\Install;
 
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-interface DbInstallerCommandInterface
+class DirectoryInstaller implements InstallerInterface
 {
-    public function getName(): string;
 
-    public function getSql(): string;
+    public function install(): bool
+    {
+        return true;
+    }
+
+    public function uninstall(): bool
+    {
+        return true;
+    }
 }

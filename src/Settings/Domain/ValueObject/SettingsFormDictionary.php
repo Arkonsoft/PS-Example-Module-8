@@ -16,22 +16,14 @@
 
 declare(strict_types=1);
 
-namespace ArkonExample\Infrastructure\Bootstrap\Install;
+namespace ArkonExample\Settings\Domain\ValueObject;
 
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-class DirectoryInstaller implements InstallerInterface
+enum SettingsFormDictionary: string
 {
-
-    public function install(): bool
-    {
-        return true;
-    }
-
-    public function uninstall(): bool
-    {
-        return true;
-    }
+    case EXAMPLE_TEXT_FIELD = 'example_text_field';
+    case EXAMPLE_SWITCHER = 'example_switcher';
 }

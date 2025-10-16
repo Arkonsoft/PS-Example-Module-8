@@ -16,9 +16,9 @@
 
 declare(strict_types=1);
 
-namespace ArkonExample\Infrastructure\Service;
+namespace ArkonExample\Settings\Infrastructure\Service;
 
-use ArkonExample\Infrastructure\Form\Settings\SettingsFormDictionary;
+use ArkonExample\Settings\Domain\ValueObject\SettingsFormDictionary;
 
 if (!defined('_PS_VERSION_')) {
     exit;

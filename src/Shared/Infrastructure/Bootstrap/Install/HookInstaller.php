@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NOTICE OF LICENSE
  *
@@ -16,7 +17,7 @@
 
 declare(strict_types=1);
 
-namespace ArkonExample\Infrastructure\Bootstrap\Install;
+namespace ArkonExample\Shared\Infrastructure\Bootstrap\Install;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -24,13 +25,16 @@ if (!defined('_PS_VERSION_')) {
 
 class HookInstaller implements InstallerInterface
 {
-    public function __construct(private \ArkonExample $module)
-    {
-    }
+    // @phpstan-ignore-next-line
+    public function __construct(private \ArkonExample $module) {}
 
     public function install(): bool
     {
-        // return $this->module->registerHook('displayHome');
+        /* Uncomment to install hooks */
+        // return $this->module->registerHook([
+        //     'displayHome',
+        //     'actionFrontControllerSetMedia',
+        // ]);
 
         return true;
     }
