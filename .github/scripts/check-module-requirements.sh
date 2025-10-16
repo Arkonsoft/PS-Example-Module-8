@@ -26,7 +26,7 @@ check_php_header() {
 echo "🔍 Checking module requirements..."
 
 # 1. Check for index.php in all directories (except vendor, node_modules, .git, .github)
-for dir in $(find . -type d ! -path "*/vendor/*" ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/.github/*"); do
+for dir in $(find . -type d ! -path "*/vendor/*" ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/.github/*" ! -name ".git" ! -name ".github"); do
     check_file_exists "${dir}/index.php"
 done
 
