@@ -1,31 +1,31 @@
-# 📦 Przykładowy moduł PrestaShop 8+
+# Przykładowy moduł PrestaShop 8+
 
 Użyj tego repozytorium jako punktu startowego do tworzenia swojego modułu. Znajdziesz w nim: 
 
-- 📁 pliki i foldery zorganizowane zgodnie z DDD (oraz wymaganiami PrestaShop)
-- 🔧 gotowe klasy do instalacji hooków, tabów, tabel itp.
-- 🏗️ kontener DI + podstawowa konfiguracja
-- 🔍 skonfigurowany PHPStan
-- ⚙️ gotowy kontroler i serwis ustawień modułu
+- pliki i foldery zorganizowane zgodnie z DDD (oraz wymaganiami PrestaShop)
+- gotowe klasy do instalacji hooków, tabów, tabel itp.
+- kontener DI + podstawowa konfiguracja
+- skonfigurowany PHPStan
+- gotowy kontroler i serwis ustawień modułu
 
-## 📋 Spis treści
+## Spis treści
 
-- [Pierwsze użycie (przy pomocy skryptu)](#-pierwsze-użycie-przy-pomocy-skryptu)
-- [Pierwsze użycie (ręcznie)](#-pierwsze-użycie-ręcznie)
-- [⚠️ Przed rozpoczęciem pracy](#️-przed-rozpoczęciem-pracy)
-- [📁 Struktura modułu](#-struktura-modułu)
-- [⚙️ Konfiguracja](#️-konfiguracja)
-- [🧪 Testowanie i jakość kodu](#-testowanie-i-jakość-kodu)
-- [🗄️ Przykładowe pliki SQL do instalacji tabel](#️-przykładowe-pliki-sql-do-instalacji-tabel)
-- [⚙️ Ustawienia modułu](#️-ustawienia-modułu)
-- [🤖 Gotowe prompty dla AI](#-gotowe-prompty-dla-ai)
-- [🏗️ Dlaczego DDD?](#️-dlaczego-ddd)
+- [Pierwsze użycie (przy pomocy skryptu)](#pierwsze-użycie-przy-pomocy-skryptu)
+- [Pierwsze użycie (ręcznie)](#pierwsze-użycie-ręcznie)
+- [Przed rozpoczęciem pracy](#przed-rozpoczęciem-pracy)
+- [Struktura modułu](#struktura-modułu)
+- [Konfiguracja](#konfiguracja)
+- [Testowanie i jakość kodu](#testowanie-i-jakość-kodu)
+- [Przykładowe pliki SQL do instalacji tabel](#przykładowe-pliki-sql-do-instalacji-tabel)
+- [Ustawienia modułu](#ustawienia-modułu)
+- [Gotowe prompty dla AI](#gotowe-prompty-dla-ai)
+- [Dlaczego DDD?](#dlaczego-ddd)
 
-## 🚀 Pierwsze użycie (przy pomocy skryptu)
+## Pierwsze użycie (przy pomocy skryptu)
 
 TODO: Opis skryptu
 
-## 🛠️ Pierwsze użycie (ręcznie)
+## Pierwsze użycie (ręcznie)
 
 1. Sklonuj to repozytorium do folderu `modules` w projekcie PrestaShop. 
 ```bash
@@ -37,20 +37,20 @@ git clone https://github.com/Arkonsoft/PS-Example-Module-8.git ./twojanazwamodul
 5. Uruchom komendę `composer install`.
 6. Podmień logo, jeżeli tworzysz moduł dla Klienta.
 
-## ⚠️ Przed rozpoczęciem pracy
+## Przed rozpoczęciem pracy
 
 Przed rozpoczęciem pracy z modułem, upewnij się, że wykonałeś następujące kroki:
 
-### 1. 📄 Pliki SQL
+### 1. Pliki SQL
 Pliki `sql/install.sql` i `sql/uninstall.sql` są **zakomentowane jako przykład**. Należy je odkomentować i dostosować do potrzeb Twojego modułu.
 
-### 2. ⚙️ Serwis Settings
+### 2. Serwis Settings
 Serwis `Settings` w `src/Settings/Infrastructure/Service/Settings.php` zawiera tylko przykładową metodę `getExampleTextFieldName()`. Należy dodać własne gettery i settery dla wszystkich pól zdefiniowanych w `SettingsFormDictionary`.
 
-### 3. 🌐 Tłumaczenia
+### 3. Tłumaczenia
 Plik `translations/pl.php` jest pusty. Należy dodać tłumaczenia jeśli są potrzebne dla Twojego modułu.
 
-## 📁 Struktura modułu
+## Struktura modułu
 
 ### Foldery
 
@@ -90,7 +90,7 @@ Plik `translations/pl.php` jest pusty. Należy dodać tłumaczenia jeśli są po
     └── index.php
 ```
 
-## ⚙️ Konfiguracja
+## Konfiguracja
 
 1. Ustaw nazwę i opis modułu w głównym pliku modułu. Nie stosuj translacji jeżeli moduł jest przeznaczony tylko dla polskojęzycznego Klienta (translacje w konstruktorze dorzucają kilka ms do czasu ładowania strony, a finalnie bardzo rzadko są przydatne w back-office).
 2. Sprawdź jakie pozycje w menu back-office chcesz dodać i wprowadź modyfikacje w `src\Shared\Infrastructure\Bootstrap\Install\TabInstaller.php`. Domyślnie dodany zostanie ukryty tab z ustawieniami modułu. Jeżeli chcesz, aby link był widoczny, zmień parametr $shouldBeVisibleInMenu w `installTab` na `true`.
@@ -98,7 +98,7 @@ Plik `translations/pl.php` jest pusty. Należy dodać tłumaczenia jeśli są po
 4. Sprawdź czy moduł powinien stworzyć własne foldery i wprowadź modyfikacje w `src\Shared\Infrastructure\Bootstrap\Install\DirectoryInstaller.php`.
 5. Sprawdź czy moduł powinien stworzyć jakieś tabele w bazie danych i wprowadź modyfikacje w plikach `sql/install.sql` i `sql/uninstall.sql`. DbInstaller automatycznie wykonuje te pliki podczas instalacji i deinstalacji modułu.
 
-## 🧪 Testowanie i jakość kodu
+## Testowanie i jakość kodu
 
 ### PHPStan
 
@@ -130,7 +130,7 @@ cp -r temp-prestashop/install-dev /path/to/your/prestashop/
 rm -rf temp-prestashop
 ```
 
-## 🗄️ Przykładowe pliki SQL do instalacji tabel w bazie danych
+## Przykładowe pliki SQL do instalacji tabel w bazie danych
 
 **sql/install.sql:**
 ```sql
@@ -171,7 +171,7 @@ DbInstaller automatycznie wykonuje pliki SQL podczas instalacji i deinstalacji m
 - Mniej kodu PHP - nie trzeba tworzyć osobnych klas dla każdej tabeli
 - Lepsze wsparcie dla złożonych zapytań SQL
 
-## ⚙️ Ustawienia modułu
+## Ustawienia modułu
 
 Moduł posiada gotowe kontrolery i serwisy ustawień. 
 
@@ -257,7 +257,7 @@ W pliku SettingsAdminController znajdziesz przykładową implementację metody `
     }
 ```
 
-## 🤖 Gotowe prompty dla AI
+## Gotowe prompty dla AI
 
 ### Dodawanie nowych pól do ustawień modułu
 
@@ -290,7 +290,7 @@ Wykonaj następujące kroki:
 Używaj standardów nazewnictwa z projektu - camelCase dla metod, UPPER_SNAKE_CASE dla stałych.
 ```
 
-## 🏗️ Dlaczego DDD?
+## Dlaczego DDD?
 
 Standardowe podejście z podziałem plików na kontrolery, serwisy, repozytoria itp. nie zawsze jest wystarczające, ponieważ tworzy silne powiązania między warstwami, co utrudnia wprowadzanie zmian i testowanie. W przypadku modułów na PrestaShop bardzo często mamy do czynienia z modyfikacjami założeń, które niestety równie często prowadzą do potrzeby przepisywania niemal całego modułu. Użycie DDD (choć początkowo może wydawać się skomplikowane) pozwala na znacznie elastyczniejsze podejście do zmian w modułach, zwiększa czytelność kodu i umożliwia lepszą integrację z innymi systemami. 
 
