@@ -3,3 +3,5 @@ vendor
 yarn.lock
 .env
 /config_*.xml
+!/sql/install.sql
+!/sql/uninstall.sql
