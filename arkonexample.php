@@ -63,7 +63,7 @@ class ArkonExample extends Module
         /* Parameters */
         $this->moduleContainer->setParameter('module_name', $this->name);
         $this->moduleContainer->setParameter('sql_dir', $this->getLocalPath() . '/sql');
-        $this->moduleContainer->setParameter('settings_controller_class_name', str_replace('Controller', '', AdminArkonExampleSettingsController::class));
+        $this->moduleContainer->setParameter('settings_controller_class_name', basename(str_replace('Controller', '', AdminArkonExampleSettingsController::class)));
 
         /* Services */
         $this->moduleContainer->set(self::class, function () {
