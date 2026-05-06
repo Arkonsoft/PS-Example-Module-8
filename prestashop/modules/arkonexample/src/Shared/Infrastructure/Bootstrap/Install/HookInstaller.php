@@ -11,7 +11,7 @@
  * You must not modify, adapt or create derivative works of this source code
  *
  * @author Arkonsoft
- * @copyright 2025 Arkonsoft
+ * @copyright 2026 Arkonsoft
  * @license Commercial - The terms of the license are subject to a proprietary agreement between the author (Arkonsoft) and the licensee
  */
 
@@ -26,7 +26,9 @@ if (!defined('_PS_VERSION_')) {
 class HookInstaller implements InstallerInterface
 {
     // @phpstan-ignore-next-line
-    public function __construct(private \ArkonExample $module) {}
+    public function __construct(private \ArkonExample $module)
+    {
+    }
 
     public function install(): bool
     {

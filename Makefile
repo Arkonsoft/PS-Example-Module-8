@@ -1,7 +1,13 @@
-.PHONY: phpstan analyse docker-start docker-refresh
+.PHONY: phpstan analyse cs-fix cs-check docker-start docker-refresh
 
 phpstan analyse:
 	docker compose run --rm phpstan
+
+cs-fix:
+	docker compose run --rm php-cs-fixer
+
+cs-check:
+	cd prestashop/modules/arkonexample && composer install --no-interaction --no-progress && vendor/bin/php-cs-fixer fix --dry-run --diff --config="$(CURDIR)/.php-cs-fixer.dist.php"
 
 docker-start:
 	docker compose up

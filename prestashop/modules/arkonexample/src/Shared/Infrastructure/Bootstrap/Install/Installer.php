@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NOTICE OF LICENSE
  *
@@ -10,7 +11,7 @@
  * You must not modify, adapt or create derivative works of this source code
  *
  * @author Arkonsoft
- * @copyright 2025 Arkonsoft
+ * @copyright 2026 Arkonsoft
  * @license Commercial - The terms of the license are subject to a proprietary agreement between the author (Arkonsoft) and the licensee
  */
 
@@ -28,7 +29,7 @@ class Installer implements InstallerInterface
         private readonly DbInstaller $dbInstaller,
         private readonly HookInstaller $hookInstaller,
         private readonly TabInstaller $tabInstaller,
-        private readonly DirectoryInstaller $directoryInstaller
+        private readonly DirectoryInstaller $directoryInstaller,
     ) {
     }
 

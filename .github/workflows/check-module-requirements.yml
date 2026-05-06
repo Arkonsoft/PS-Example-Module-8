@@ -2,7 +2,6 @@ name: Check Module Requirements
 
 on:
   push:
-  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -37,3 +36,16 @@ jobs:
             -v "$GITHUB_WORKSPACE/prestashop/modules/arkonexample:/var/www/html/modules/arkonexample:ro" \
             prestashop/prestashop-flashlight:8.2.6-alpine-nginx \
             analyse --memory-limit=-1 --configuration=/var/www/html/modules/arkonexample/phpstan.neon
+
+  php-cs-fixer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Composer install (module)
+        working-directory: prestashop/modules/arkonexample
+        run: composer install --no-interaction --no-progress
+
+      - name: PHP CS Fixer (dry-run)
+        working-directory: prestashop/modules/arkonexample
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff --config="$GITHUB_WORKSPACE/.php-cs-fixer.dist.php"

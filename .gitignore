@@ -1,3 +1,4 @@
+.php-cs-fixer.cache
 /prestashop/*
 !/prestashop/modules/
 /prestashop/modules/*

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NOTICE OF LICENSE
  *
@@ -10,7 +11,7 @@
  * You must not modify, adapt or create derivative works of this source code
  *
  * @author Arkonsoft
- * @copyright 2025 Arkonsoft
+ * @copyright 2026 Arkonsoft
  * @license Commercial - The terms of the license are subject to a proprietary agreement between the author (Arkonsoft) and the licensee
  */
 
@@ -41,9 +42,9 @@ class TabInstaller implements InstallerInterface
     /**
      * @return TabConfiguration[]
      */
-    private function getTabs(): array {
+    private function getTabs(): array
+    {
         return [
-            
             /* Main module tab */
             new TabConfiguration(
                 controllerClassName: (string) $this->module->name,
@@ -57,7 +58,7 @@ class TabInstaller implements InstallerInterface
                 tabName: (string) $this->module->displayName,
                 tabParent: (string) $this->module->name,
                 shouldBeVisibleInMenu: true
-            )
+            ),
         ];
     }
 
@@ -71,12 +72,13 @@ class TabInstaller implements InstallerInterface
                     tabParent: $tab->getTabParent(),
                     shouldBeVisibleInMenu: $tab->getShouldBeVisibleInMenu()
                 );
-            }   
+            }
         } catch (\Exception $e) {
             // @phpstan-ignore-next-line
             if (_PS_MODE_DEV_) {
                 throw $e;
             }
+
             // @phpstan-ignore-next-line
             return false;
         }
@@ -97,6 +99,7 @@ class TabInstaller implements InstallerInterface
             if (_PS_MODE_DEV_) {
                 throw $e;
             }
+
             // @phpstan-ignore-next-line
             return false;
         }

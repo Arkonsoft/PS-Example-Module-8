@@ -50,6 +50,15 @@ services:
       - --memory-limit=-1
       - --configuration=/var/www/html/modules/arkonexample/phpstan.neon
 
+  php-cs-fixer:
+    image: prestashop/prestashop-flashlight:8.2.6-alpine-nginx
+    working_dir: /repo/prestashop/modules/arkonexample
+    volumes:
+      - .:/repo
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - composer install --no-interaction --no-progress && exec vendor/bin/php-cs-fixer fix --config=/repo/.php-cs-fixer.dist.php
+
   mysql:
     image: mariadb:lts
     healthcheck:

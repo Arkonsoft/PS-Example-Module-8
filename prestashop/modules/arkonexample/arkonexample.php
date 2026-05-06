@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NOTICE OF LICENSE
  *
@@ -10,7 +11,7 @@
  * You must not modify, adapt or create derivative works of this source code
  *
  * @author Arkonsoft
- * @copyright 2025 Arkonsoft
+ * @copyright 2026 Arkonsoft
  * @license Commercial - The terms of the license are subject to a proprietary agreement between the author (Arkonsoft) and the licensee
  */
 
@@ -34,8 +35,8 @@ class ArkonExample extends Module
     public function __construct()
     {
         $this->name = 'arkonexample';
-        
-        /**
+
+        /*
          * @see Full list of available tabs: https://devdocs.prestashop-project.org/8/modules/concepts/module-class/#tab
          */
         $this->tab = 'front_office_features';
@@ -70,7 +71,7 @@ class ArkonExample extends Module
             return $this;
         });
 
-        $this->moduleContainer->set(\ArkonExample::class, function () {
+        $this->moduleContainer->set(ArkonExample::class, function () {
             return $this;
         });
 
