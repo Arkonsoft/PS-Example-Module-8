@@ -1,7 +1,4 @@
-vendor
-.phpunit.result.cache
-yarn.lock
-.env
-/config_*.xml
-!/sql/install.sql
-!/sql/uninstall.sql
+/prestashop/*
+!/prestashop/modules/
+/prestashop/modules/*
+!/prestashop/modules/arkonexample/

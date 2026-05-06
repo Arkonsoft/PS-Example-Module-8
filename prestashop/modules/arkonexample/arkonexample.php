@@ -42,7 +42,7 @@ class ArkonExample extends Module
         $this->version = '1.0.0';
         $this->author = 'Arkonsoft';
         $this->author_uri = 'https://arkonsoft.pl/';
-        $this->need_instance = true;
+        $this->need_instance = 1;
         $this->bootstrap = true;
         $this->ps_versions_compliancy = ['min' => '8.0.0', 'max' => _PS_VERSION_];
         $this->dependencies = [];
@@ -56,7 +56,7 @@ class ArkonExample extends Module
         $this->prepareContainer();
     }
 
-    private function prepareContainer()
+    private function prepareContainer(): void
     {
         $this->moduleContainer = new AutowiringContainer();
 
@@ -92,7 +92,7 @@ class ArkonExample extends Module
         return true;
     }
 
-    public function install()
+    public function install(): bool
     {
         if (!Shop::isFeatureActive()) {
             Shop::setContext(Shop::CONTEXT_ALL);
@@ -105,7 +105,7 @@ class ArkonExample extends Module
         return $this->moduleContainer->get(Installer::class)->install();
     }
 
-    public function uninstall()
+    public function uninstall(): bool
     {
         if (!parent::uninstall()) {
             return false;
@@ -114,8 +114,13 @@ class ArkonExample extends Module
         return $this->moduleContainer->get(Installer::class)->uninstall();
     }
 
-    public function getContent()
+    public function getContent(): void
     {
-        Tools::redirectAdmin($this->context->link->getAdminLink($this->moduleContainer->get('%settings_controller_class_name%')));
+        $link = $this->context->link;
+        if (!$link instanceof Link) {
+            return;
+        }
+
+        Tools::redirectAdmin($link->getAdminLink($this->moduleContainer->get('%settings_controller_class_name%')));
     }
 }

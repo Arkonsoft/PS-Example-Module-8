@@ -1,0 +1,14 @@
+includes:
+    - /var/opt/prestashop/coding-standards/phpstan/ps-module-extension.neon
+
+parameters:
+    level: 8
+    paths:
+        - arkonexample.php
+        - controllers
+        - src
+    scanDirectories:
+        - vendor/arkonsoft
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Instantiated class Symfony\\Component\\Cache\\Adapter\\FilesystemAdapter not found.#'

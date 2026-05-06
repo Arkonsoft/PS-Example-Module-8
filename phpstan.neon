@@ -1,7 +1,0 @@
-parameters:
-    level: 8
-    paths:
-        - controllers
-        - src
-    bootstrapFiles:
-        - tests/bootstrap.php

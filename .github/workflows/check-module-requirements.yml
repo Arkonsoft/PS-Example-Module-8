@@ -8,8 +8,32 @@ on:
 jobs:
   check-module:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: prestashop/modules/arkonexample
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check module requirements
-        run: ./.github/scripts/check-module-requirements.sh
+      - name: Check module requirements (PS-Scripts)
+        run: |
+          curl -sSf -o /tmp/ps-scripts-check.sh \
+            "https://raw.githubusercontent.com/Arkonsoft/ps-scripts/main/scripts/check.sh"
+          chmod +x /tmp/ps-scripts-check.sh
+          /tmp/ps-scripts-check.sh
+
+  phpstan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Composer install (module)
+        working-directory: prestashop/modules/arkonexample
+        run: composer install --no-interaction --no-progress
+
+      - name: PHPStan (prestashop-flashlight)
+        run: |
+          docker run --rm \
+            --entrypoint /usr/bin/phpstan \
+            -v "$GITHUB_WORKSPACE/prestashop/modules/arkonexample:/var/www/html/modules/arkonexample:ro" \
+            prestashop/prestashop-flashlight:8.2.6-alpine-nginx \
+            analyse --memory-limit=-1 --configuration=/var/www/html/modules/arkonexample/phpstan.neon

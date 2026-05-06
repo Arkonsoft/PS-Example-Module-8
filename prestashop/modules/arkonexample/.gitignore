@@ -1,0 +1,8 @@
+vendor
+.phpunit.result.cache
+yarn.lock
+.env
+/config_*.xml
+!/sql/install.sql
+!/sql/uninstall.sql
+/errors.log

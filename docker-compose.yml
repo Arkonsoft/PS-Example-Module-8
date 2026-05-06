@@ -1,0 +1,89 @@
+
+name: arkonexample-ps8
+services:
+  prestashop-init:
+    image: prestashop/prestashop-flashlight:8.2.6-alpine-nginx
+    user: "0:0"
+    restart: "no"
+    environment:
+      SYNC_UID: "${FLASHLIGHT_UID:-1000}"
+      SYNC_GID: "${FLASHLIGHT_GID:-1000}"
+    volumes:
+      - ./prestashop:/out
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        set -e
+        if [ ! -f /out/index.php ]; then
+          cp -a /var/www/html/. /out/
+          chown -R "$$SYNC_UID:$$SYNC_GID" /out
+        fi
+
+  prestashop:
+    image: prestashop/prestashop-flashlight:8.2.6-alpine-nginx
+    user: "${FLASHLIGHT_UID:-1000}:${FLASHLIGHT_GID:-1000}"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      prestashop-init:
+        condition: service_completed_successfully
+    environment:
+      - PS_DOMAIN=localhost:8000
+      - INIT_SCRIPTS_DIR=/tmp/init-scripts
+      - INIT_SCRIPTS_ON_RESTART=true
+      # - DEBUG_MODE=true
+    volumes:
+      - ./prestashop:/var/www/html:rw
+      - ./.docker/scripts:/tmp/init-scripts:ro
+    ports:
+      - 8000:80
+    expose:
+      - 80
+
+  phpstan:
+    image: prestashop/prestashop-flashlight:8.2.6-alpine-nginx
+    entrypoint: ["/usr/bin/phpstan"]
+    volumes:
+      - ./prestashop/modules/arkonexample:/var/www/html/modules/arkonexample:ro
+    command:
+      - analyse
+      - --memory-limit=-1
+      - --configuration=/var/www/html/modules/arkonexample/phpstan.neon
+
+  mysql:
+    image: mariadb:lts
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=prestashop
+      - MYSQL_PASSWORD=prestashop
+      - MYSQL_ROOT_PASSWORD=prestashop
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=prestashop
+    expose:
+      - 3306
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-Isf", "http://localhost/robots.txt"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+      - PMA_USER=prestashop
+      - PMA_PASSWORD=prestashop
+      - MYSQL_ROOT_PASSWORD=prestashop
+    ports:
+      - 6060:80
+    expose:
+      - 80
