@@ -16,7 +16,7 @@ jobs:
       - name: Check module requirements (PS-Scripts)
         run: |
           curl -sSf -o /tmp/ps-scripts-check.sh \
-            "https://raw.githubusercontent.com/Arkonsoft/ps-scripts/0123456789abcdef0123456789abcdef01234567/scripts/check.sh"
+            "https://raw.githubusercontent.com/Arkonsoft/ps-scripts/main/scripts/check.sh"
           chmod +x /tmp/ps-scripts-check.sh
           /tmp/ps-scripts-check.sh
 
