@@ -1,5 +1,5 @@
 includes:
-    - /var/opt/prestashop/coding-standards/phpstan/ps-module-extension.neon
+    - vendor/prestashop/php-dev-tools/phpstan/ps-module-extension.neon
 
 parameters:
     level: 8
