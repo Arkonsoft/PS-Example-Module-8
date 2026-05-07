@@ -48,6 +48,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.1'
+          tools: composer:1.10.27
+
       - name: Composer install (module)
         working-directory: prestashop/modules/arkonexample
         run: composer install --no-interaction --no-progress
