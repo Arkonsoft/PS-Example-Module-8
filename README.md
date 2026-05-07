@@ -1,12 +1,4 @@
-# Przykładowy moduł PrestaShop 8+
-
-Użyj tego repozytorium jako punktu startowego do tworzenia swojego modułu. Znajdziesz w nim: 
-
-- pliki i foldery zorganizowane zgodnie z DDD (oraz wymaganiami PrestaShop)
-- gotowe klasy do instalacji hooków, tabów, tabel itp.
-- kontener DI + podstawowa konfiguracja
-- skonfigurowany PHPStan
-- gotowy kontroler i serwis ustawień modułu
+# Przykładowy moduł PrestaShop
 
 ## Spis treści
 
@@ -23,19 +15,9 @@ Użyj tego repozytorium jako punktu startowego do tworzenia swojego modułu. Zna
 
 ## Pierwsze użycie (przy pomocy skryptu)
 
-TODO: Opis skryptu
-
-## Pierwsze użycie (ręcznie)
-
-1. Sklonuj to repozytorium do folderu `modules` w projekcie PrestaShop. 
-```bash
-git clone https://github.com/Arkonsoft/PS-Example-Module-8.git ./twojanazwamodulu
-```
-2. Podmień w całym folderze wystąpienia "arkonexample" oraz "ArkonExample" (**ważne**: wyszukuj z uwzględnieniem wielkości liter) na odpowiedniki zgodnie z nazwą Twojego modułu.
-3. Podmień nazwę głównego pliku modułu arkonexample.php.
-4. Podmień nazwę pliku controllers/admin/AdminArkonExampleSettingsController.php na Admin{TWOJA_NAZWA_MODUŁU}SettingsController.php
-5. Uruchom komendę `composer install`.
-6. Podmień logo, jeżeli tworzysz moduł dla Klienta.
+1. Zainstaluj skrypty: https://github.com/Arkonsoft/PS-Scripts
+1. Wejdź do folderu modules
+1. Użyj komendy ps:module-create TutajNazwaModuluCamelCasem
 
 ## Przed rozpoczęciem pracy
 
@@ -310,3 +292,17 @@ Kontroler `SettingsAdminController` w warstwie Application orkiestruje interakcj
 Funkcjonalności wspólne dla całego modułu (jak instalacja, hooki, tabele) znajdują się w `src/Shared/Infrastructure/Bootstrap/Install/`. To pozwala na ponowne użycie kodu instalacyjnego bez duplikowania go w każdym bounded context.
 
 W takim układzie, jeżeli pojawi się potrzeba dodania nowej funkcjonalności (np. zarządzania produktami), można utworzyć nowy bounded context `src/Products/` z własną implementacją warstw DDD, zachowując spójność architektoniczną i możliwość niezależnego rozwoju każdej funkcjonalności.
+
+## Development
+
+1. Pobierz repozytorium
+2. Wejdź na branch dot. wersji, nad którą chcesz pracować.
+3. Uruchom `make docker-start`
+4. Środowisko uruchomi się pod adresem http://localhost:8000
+5. Dane logowania do BO:
+
+    | Pole  | Wartość                         |
+    | ----- | ------------------------------- |
+    | URL   | http://localhost:8000/admin-dev |
+    | Login | admin@prestashop.com            |
+    | Hasło | prestashop                      |
