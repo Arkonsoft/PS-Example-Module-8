@@ -27,16 +27,20 @@ if (!defined('_PS_VERSION_')) {
 
 class DbInstaller implements InstallerInterface
 {
+    /** @var \Db */
+    private $db;
+
+    /** @var string */
+    private $sqlDir;
+
     /**
      * @param \Db $db
      * @param string $sqlDir %sql_dir%
-     *
-     * @return void
      */
-    public function __construct(
-        private \Db $db,
-        private string $sqlDir,
-    ) {
+    public function __construct(\Db $db, string $sqlDir)
+    {
+        $this->db = $db;
+        $this->sqlDir = $sqlDir;
     }
 
     public function install(): bool
@@ -62,7 +66,7 @@ class DbInstaller implements InstallerInterface
         }
 
         // Use SqlLoader for multiple SQL statements
-        $sqlLoader = new SqlLoader($this->db);
+        $sqlLoader = new SqlLoader();
         $sqlLoader->setMetaData([
             '_DB_PREFIX_' => _DB_PREFIX_,
             '_MYSQL_ENGINE_' => _MYSQL_ENGINE_,

@@ -64,7 +64,7 @@ class SettingsAdminController extends AbstractAdminSettingsController
                     [
                         'label' => 'Przykładowe pole tekstowe',
                         'type' => 'text',
-                        'name' => $settings->getFieldFullName(SettingsFormDictionary::EXAMPLE_TEXT_FIELD->value),
+                        'name' => $settings->getFieldFullName(SettingsFormDictionary::EXAMPLE_TEXT_FIELD),
                         'desc' => 'To jest przykładowy opis pola',
                         'lang' => true,
                         'tab' => 'global',
@@ -72,16 +72,16 @@ class SettingsAdminController extends AbstractAdminSettingsController
                     [
                         'label' => 'Przykładowy przełącznik',
                         'type' => 'switch',
-                        'name' => $settings->getFieldFullName(SettingsFormDictionary::EXAMPLE_SWITCHER->value),
+                        'name' => $settings->getFieldFullName(SettingsFormDictionary::EXAMPLE_SWITCHER),
                         'is_bool' => true,
                         'values' => [
                             [
-                                'id' => $settings->getFieldFullName(SettingsFormDictionary::EXAMPLE_SWITCHER->value) . '_on',
+                                'id' => $settings->getFieldFullName(SettingsFormDictionary::EXAMPLE_SWITCHER) . '_on',
                                 'value' => 1,
                                 'label' => 'Włączony',
                             ],
                             [
-                                'id' => $settings->getFieldFullName(SettingsFormDictionary::EXAMPLE_SWITCHER->value) . '_off',
+                                'id' => $settings->getFieldFullName(SettingsFormDictionary::EXAMPLE_SWITCHER) . '_off',
                                 'value' => 0,
                                 'label' => 'Wyłączony',
                             ],

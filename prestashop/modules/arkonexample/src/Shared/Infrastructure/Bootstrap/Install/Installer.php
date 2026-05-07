@@ -25,12 +25,28 @@ if (!defined('_PS_VERSION_')) {
 
 class Installer implements InstallerInterface
 {
+    /** @var DbInstaller */
+    private $dbInstaller;
+
+    /** @var HookInstaller */
+    private $hookInstaller;
+
+    /** @var TabInstaller */
+    private $tabInstaller;
+
+    /** @var DirectoryInstaller */
+    private $directoryInstaller;
+
     public function __construct(
-        private readonly DbInstaller $dbInstaller,
-        private readonly HookInstaller $hookInstaller,
-        private readonly TabInstaller $tabInstaller,
-        private readonly DirectoryInstaller $directoryInstaller,
+        DbInstaller $dbInstaller,
+        HookInstaller $hookInstaller,
+        TabInstaller $tabInstaller,
+        DirectoryInstaller $directoryInstaller
     ) {
+        $this->dbInstaller = $dbInstaller;
+        $this->hookInstaller = $hookInstaller;
+        $this->tabInstaller = $tabInstaller;
+        $this->directoryInstaller = $directoryInstaller;
     }
 
     public function install(): bool

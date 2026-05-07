@@ -1,8 +1,8 @@
 
-name: arkonexample-ps8
+name: arkonexample-ps17
 services:
   prestashop-init:
-    image: prestashop/prestashop-flashlight:8.2.6-alpine-nginx
+    image: prestashop/prestashop-flashlight:1.7.4.1-alpine-nginx
     user: "0:0"
     restart: "no"
     environment:
@@ -20,7 +20,7 @@ services:
         fi
 
   prestashop:
-    image: prestashop/prestashop-flashlight:8.2.6-alpine-nginx
+    image: prestashop/prestashop-flashlight:1.7.4.1-alpine-nginx
     user: "${FLASHLIGHT_UID:-1000}:${FLASHLIGHT_GID:-1000}"
     depends_on:
       mysql:
@@ -41,7 +41,7 @@ services:
       - 80
 
   phpstan:
-    image: prestashop/prestashop-flashlight:8.2.6-alpine-nginx
+    image: prestashop/prestashop-flashlight:1.7.4.1-alpine-nginx
     entrypoint: ["/usr/bin/phpstan"]
     environment:
       _PS_ROOT_DIR_: /var/www/html
@@ -53,7 +53,7 @@ services:
       - --configuration=/var/www/html/modules/arkonexample/phpstan.neon
 
   php-cs-fixer:
-    image: prestashop/prestashop-flashlight:8.2.6-alpine-nginx
+    image: prestashop/prestashop-flashlight:1.7.4.1-alpine-nginx
     working_dir: /repo/prestashop/modules/arkonexample
     volumes:
       - .:/repo

@@ -27,11 +27,15 @@ if (!defined('_PS_VERSION_')) {
 
 class Settings
 {
+    /** @var string */
+    private $moduleName;
+
     /**
      * @param string $moduleName %module_name%
      */
-    public function __construct(private readonly string $moduleName)
+    public function __construct(string $moduleName)
     {
+        $this->moduleName = $moduleName;
     }
 
     /**
@@ -42,12 +46,10 @@ class Settings
     public function getFieldFullName(string $field): string
     {
         if (empty($field)) {
-            // @phpstan-ignore-next-line
             if (_PS_MODE_DEV_) {
                 throw new \InvalidArgumentException('Field name cannot be empty');
             }
 
-            // @phpstan-ignore-next-line
             return '';
         }
 
@@ -65,7 +67,7 @@ class Settings
      */
     public function getExampleTextFieldName(int $langId): string
     {
-        $fieldName = $this->getFieldFullName(SettingsFormDictionary::EXAMPLE_TEXT_FIELD->value);
+        $fieldName = $this->getFieldFullName(SettingsFormDictionary::EXAMPLE_TEXT_FIELD);
         $value = (string) \Configuration::get($fieldName, $langId);
 
         if (empty($value)) {

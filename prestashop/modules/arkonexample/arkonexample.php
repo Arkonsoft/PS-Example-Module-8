@@ -30,7 +30,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 class ArkonExample extends Module
 {
-    public AutowiringContainer $moduleContainer;
+    /** @var AutowiringContainer */
+    public $moduleContainer;
 
     public function __construct()
     {
@@ -45,7 +46,7 @@ class ArkonExample extends Module
         $this->author_uri = 'https://arkonsoft.pl/';
         $this->need_instance = 1;
         $this->bootstrap = true;
-        $this->ps_versions_compliancy = ['min' => '8.0.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '1.7.4.1', 'max' => _PS_VERSION_];
         $this->dependencies = [];
 
         parent::__construct();
@@ -88,12 +89,7 @@ class ArkonExample extends Module
         });
     }
 
-    public function isUsingNewTranslationSystem(): bool
-    {
-        return true;
-    }
-
-    public function install(): bool
+    public function install()
     {
         if (!Shop::isFeatureActive()) {
             Shop::setContext(Shop::CONTEXT_ALL);
@@ -106,7 +102,7 @@ class ArkonExample extends Module
         return $this->moduleContainer->get(Installer::class)->install();
     }
 
-    public function uninstall(): bool
+    public function uninstall()
     {
         if (!parent::uninstall()) {
             return false;

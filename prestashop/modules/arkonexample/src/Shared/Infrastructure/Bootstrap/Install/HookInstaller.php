@@ -25,9 +25,12 @@ if (!defined('_PS_VERSION_')) {
 
 class HookInstaller implements InstallerInterface
 {
-    // @phpstan-ignore-next-line
-    public function __construct(private \ArkonExample $module)
+    /** @var \ArkonExample */
+    private $module;
+
+    public function __construct(\ArkonExample $module)
     {
+        $this->module = $module;
     }
 
     public function install(): bool

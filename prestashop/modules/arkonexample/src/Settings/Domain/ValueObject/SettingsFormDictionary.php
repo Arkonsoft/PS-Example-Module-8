@@ -23,8 +23,8 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-enum SettingsFormDictionary: string
+interface SettingsFormDictionary
 {
-    case EXAMPLE_TEXT_FIELD = 'example_text_field';
-    case EXAMPLE_SWITCHER = 'example_switcher';
+    const EXAMPLE_TEXT_FIELD = 'example_text_field';
+    const EXAMPLE_SWITCHER = 'example_switcher';
 }

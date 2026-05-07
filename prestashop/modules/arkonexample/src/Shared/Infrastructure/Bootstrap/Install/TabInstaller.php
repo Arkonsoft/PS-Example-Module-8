@@ -21,7 +21,6 @@ namespace ArkonExample\Shared\Infrastructure\Bootstrap\Install;
 
 use Arkonsoft\PsModule\Core\Tab\TabConfiguration;
 use Arkonsoft\PsModule\Core\Tab\TabDictionary;
-use Arkonsoft\PsModule\Core\Tab\TabManagerInterface;
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -29,14 +28,21 @@ if (!defined('_PS_VERSION_')) {
 
 class TabInstaller implements InstallerInterface
 {
+    /** @var \ArkonExample */
+    private $module;
+
+    /** @var string */
+    private $settingsControllerClassName;
+
     /**
      * @param string $settingsControllerClassName %settings_controller_class_name%
      */
     public function __construct(
-        private readonly \ArkonExample $module,
-        private readonly string $settingsControllerClassName,
-        private readonly TabManagerInterface $tabManager,
+        \ArkonExample $module,
+        string $settingsControllerClassName
     ) {
+        $this->module = $module;
+        $this->settingsControllerClassName = $settingsControllerClassName;
     }
 
     /**
@@ -47,17 +53,17 @@ class TabInstaller implements InstallerInterface
         return [
             /* Main module tab */
             new TabConfiguration(
-                controllerClassName: (string) $this->module->name,
-                tabName: (string) $this->module->displayName,
-                tabParent: TabDictionary::PARENT_THEMES,
-                shouldBeVisibleInMenu: true
+                (string) $this->module->name,
+                (string) $this->module->displayName,
+                TabDictionary::PARENT_THEMES,
+                true
             ),
             /* Settings tab */
             new TabConfiguration(
-                controllerClassName: (string) $this->settingsControllerClassName,
-                tabName: (string) $this->module->displayName,
-                tabParent: (string) $this->module->name,
-                shouldBeVisibleInMenu: true
+                (string) $this->settingsControllerClassName,
+                (string) $this->module->displayName,
+                (string) $this->module->name,
+                true
             ),
         ];
     }
@@ -66,20 +72,18 @@ class TabInstaller implements InstallerInterface
     {
         try {
             foreach ($this->getTabs() as $tab) {
-                $this->tabManager->installTab(
-                    controllerClassName: $tab->getControllerClassName(),
-                    tabName: $tab->getTabName(),
-                    tabParent: $tab->getTabParent(),
-                    shouldBeVisibleInMenu: $tab->getShouldBeVisibleInMenu()
+                $this->installTab(
+                    $tab->getControllerClassName(),
+                    $tab->getTabName(),
+                    $tab->getTabParent(),
+                    $tab->getShouldBeVisibleInMenu()
                 );
             }
         } catch (\Exception $e) {
-            // @phpstan-ignore-next-line
             if (_PS_MODE_DEV_) {
                 throw $e;
             }
 
-            // @phpstan-ignore-next-line
             return false;
         }
 
@@ -90,20 +94,64 @@ class TabInstaller implements InstallerInterface
     {
         try {
             foreach ($this->getTabs() as $tab) {
-                $this->tabManager->uninstallTab(
-                    controllerClassName: $tab->getControllerClassName()
-                );
+                $this->uninstallTab($tab->getControllerClassName());
             }
         } catch (\Exception $e) {
-            // @phpstan-ignore-next-line
             if (_PS_MODE_DEV_) {
                 throw $e;
             }
 
-            // @phpstan-ignore-next-line
             return false;
         }
 
         return true;
+    }
+
+    public function installTab(
+        string $controllerClassName,
+        string $tabName,
+        string $tabParent,
+        bool $shouldBeVisibleInMenu
+    ): bool {
+        if ($this->getIdByControllerClassName($controllerClassName)) {
+            return true;
+        }
+
+        $tab = new \Tab();
+        $tab->id_parent = (int) $this->getIdByControllerClassName($tabParent);
+        $tab->name = [];
+
+        if (is_array($tabName)) {
+            $tab->name = $tabName;
+        } else {
+            foreach (\Language::getLanguages(true, false, true) as $langId) {
+                $tab->name[(int) $langId] = $tabName;
+            }
+        }
+
+        $tab->class_name = $controllerClassName;
+        $tab->module = $this->module->name;
+        $tab->active = $shouldBeVisibleInMenu;
+
+        return (bool) $tab->add();
+    }
+
+    /**
+     * @param string $controllerClassName
+     *
+     * @return bool
+     */
+    public function uninstallTab($controllerClassName): bool
+    {
+        $tabId = (int) $this->getIdByControllerClassName($controllerClassName);
+
+        $tab = new \Tab((int) $tabId);
+
+        return (bool) $tab->delete();
+    }
+
+    public function getIdByControllerClassName($controllerClassName): int
+    {
+        return (int) \Tab::getIdFromClassName($controllerClassName);
     }
 }
