@@ -39,7 +39,7 @@ jobs:
             --entrypoint /usr/bin/phpstan \
             -e _PS_ROOT_DIR_=/var/www/html \
             -v "$GITHUB_WORKSPACE/prestashop/modules/arkonexample:/var/www/html/modules/arkonexample:ro" \
-            prestashop/prestashop-flashlight:8.2.6-alpine-nginx \
+            prestashop/prestashop-flashlight:1.7.4.1-alpine-nginx \
             analyse --memory-limit=-1 --configuration=/var/www/html/modules/arkonexample/phpstan.neon
 
   php-cs-fixer:
