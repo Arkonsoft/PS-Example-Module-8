@@ -40,20 +40,13 @@ jobs:
             --entrypoint /usr/bin/phpstan \
             -e _PS_ROOT_DIR_=/var/www/html \
             -v "$GITHUB_WORKSPACE/prestashop/modules/arkonexample:/var/www/html/modules/arkonexample:ro" \
-            prestashop/prestashop-flashlight:1.7.4.1-alpine-nginx \
+            prestashop/prestashop-flashlight:1.7.8.11-alpine-nginx \
             analyse --memory-limit=-1 --configuration=/var/www/html/modules/arkonexample/phpstan.neon
 
   php-cs-fixer:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup PHP 7.1
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "7.1"
-          coverage: none
-          tools: composer:2.2
 
       - name: Composer install (module)
         working-directory: prestashop/modules/arkonexample

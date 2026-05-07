@@ -7,7 +7,7 @@ $moduleRoot = __DIR__ . '/prestashop/modules/arkonexample';
 require_once $moduleRoot . '/vendor/autoload.php';
 
 $config = new class extends PrestaShop\CodingStandards\CsFixer\Config {
-    public function getRules()
+    public function getRules(): array
     {
         return array_merge(parent::getRules(), [
             'blank_line_after_opening_tag' => false,

@@ -121,12 +121,8 @@ class TabInstaller implements InstallerInterface
         $tab->id_parent = (int) $this->getIdByControllerClassName($tabParent);
         $tab->name = [];
 
-        if (is_array($tabName)) {
-            $tab->name = $tabName;
-        } else {
-            foreach (\Language::getLanguages(true, false, true) as $langId) {
-                $tab->name[(int) $langId] = $tabName;
-            }
+        foreach (\Language::getLanguages(true, false, true) as $langId) {
+            $tab->name[(int) $langId] = $tabName;
         }
 
         $tab->class_name = $controllerClassName;
@@ -141,7 +137,7 @@ class TabInstaller implements InstallerInterface
      *
      * @return bool
      */
-    public function uninstallTab($controllerClassName): bool
+    public function uninstallTab(string $controllerClassName): bool
     {
         $tabId = (int) $this->getIdByControllerClassName($controllerClassName);
 
@@ -150,7 +146,7 @@ class TabInstaller implements InstallerInterface
         return (bool) $tab->delete();
     }
 
-    public function getIdByControllerClassName($controllerClassName): int
+    public function getIdByControllerClassName(string $controllerClassName): int
     {
         return (int) \Tab::getIdFromClassName($controllerClassName);
     }

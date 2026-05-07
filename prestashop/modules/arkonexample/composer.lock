@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "201ec39456ed35e9634ba1b31d85addc",
+    "content-hash": "244c24174d625f062357648b92db1da2",
     "packages": [
         {
             "name": "arkonsoft/ps-module-core",

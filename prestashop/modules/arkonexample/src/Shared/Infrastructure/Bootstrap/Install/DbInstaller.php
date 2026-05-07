@@ -27,19 +27,14 @@ if (!defined('_PS_VERSION_')) {
 
 class DbInstaller implements InstallerInterface
 {
-    /** @var \Db */
-    private $db;
-
     /** @var string */
     private $sqlDir;
 
     /**
-     * @param \Db $db
      * @param string $sqlDir %sql_dir%
      */
-    public function __construct(\Db $db, string $sqlDir)
+    public function __construct(string $sqlDir)
     {
-        $this->db = $db;
         $this->sqlDir = $sqlDir;
     }
 

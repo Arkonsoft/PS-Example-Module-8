@@ -33,6 +33,12 @@ class ArkonExample extends Module
     /** @var AutowiringContainer */
     public $moduleContainer;
 
+    /** @var bool */
+    public $bootstrap;
+
+    /** @var string */
+    public $confirmUninstall;
+
     public function __construct()
     {
         $this->name = 'arkonexample';
@@ -89,6 +95,9 @@ class ArkonExample extends Module
         });
     }
 
+    /**
+     * @return bool
+     */
     public function install()
     {
         if (!Shop::isFeatureActive()) {
@@ -102,6 +111,9 @@ class ArkonExample extends Module
         return $this->moduleContainer->get(Installer::class)->install();
     }
 
+    /**
+     * @return bool
+     */
     public function uninstall()
     {
         if (!parent::uninstall()) {
@@ -113,11 +125,6 @@ class ArkonExample extends Module
 
     public function getContent(): void
     {
-        $link = $this->context->link;
-        if (!$link instanceof Link) {
-            return;
-        }
-
-        Tools::redirectAdmin($link->getAdminLink($this->moduleContainer->get('%settings_controller_class_name%')));
+        Tools::redirectAdmin($this->context->link->getAdminLink($this->moduleContainer->get('%settings_controller_class_name%')));
     }
 }
