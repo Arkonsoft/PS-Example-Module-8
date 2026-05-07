@@ -3,7 +3,8 @@ name: Check Module Requirements
 on:
   push:
     branches:
-      - main
+      - ps8
+      - ps17
   pull_request:
   workflow_dispatch:
 
